@@ -1,0 +1,521 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Google Now Web Mockup</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="icon" sizes="192x192" href="./favicon-192.png">
+    <link rel="icon" sizes="544x544"  href="./favicon-hd.png">
+    <link rel="shortcut icon" type="image/png" href="./favicon.png">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500,400italic,700italic,300,700,500italic,300italic,400' rel='stylesheet' type='text/css'>
+    <!--link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css'-->
+    <link rel="stylesheet" href="./stylesheets/styles.css">
+    <link rel="stylesheet" href="./stylesheets/preloader.css">
+    <link rel="stylesheet" href="./stylesheets/checkbox.css">
+    <link rel="stylesheet" href="./stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="./stylesheets/jquery-ui.theme.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="./javascripts/velocity.min.js"></script>
+    <script src="./javascripts/location.js"></script>
+    <script src="./javascripts/scrolltoolbar.js" async defer></script>
+    <script src="./javascripts/header.js" async defer></script>
+    <script src="./javascripts/doodle.js" async defer></script>
+    <script src="./javascripts/voicesearch.js" async defer></script>
+    <script src="./javascripts/tinycolor.js"></script>
+    <script src="./javascripts/toggles.js"></script>
+    <script src="./javascripts/labels.js"></script>
+    <script src="./javascripts/sources/gcard.js"></script>
+    <script src="./javascripts/sources/wikipedia.js"></script>
+    <script src="./javascripts/sources/maps.js"></script>
+    <script src="./javascripts/sources/feed.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#03a9f4">
+
+    <meta name="description" content="Basic Google Now Web Mockup.">
+    <meta name="author" content="Maik AngelDE98 Macho">
+  </head>
+  <body unresolved>
+    <div class="header">
+    </div>
+    <div id="chromebar">
+      <a href="https://plus.google.com/" id="cbar_me" locale-key="cbar.me">+Me</a>
+      <a href="https://mail.google.com/mail/" id="cbar_gmail" locale-key="cbar.gmail">Gmail</a>
+      <a href="https://images.google.com/" id="cbar_images" locale-key="cbar.images">Images</a>
+      <a href="https://www.google.com/" id="cbar_google">google.com</a>
+    </div>
+    <form action="#" id="checkbox-doodle-form"  style="display: none;"><p>
+      <input type="checkbox" id="checkbox-doodle" checked="checked" onclick="setDoodleEnabled(this.checked)"/>
+      <label for="checkbox-doodle" locale-key="doodle.enable"></label>
+    </p></form>
+    <div class="doodle-shadow">
+    </div>
+    <div class="doodle">
+    </div>
+    <div class="main">
+      <div class="content">
+        <section>
+          <div class="button-round" id="button-add" label="" locale-key="card.add" locale-attr="label">
+            <img src="./images/icon-add-dark.png">
+          </div>
+          <div id="toolbar">
+            <form action="https://www.google.com/search" id="f" method="get">
+              <div id="hf"></div>
+              <div class="" id="fkbx">
+                <!--div id="fkbx-text">Search</div-->
+                <!--input id="q" aria-hidden="true" autocomplete="off" name="q" tabindex="-1" type="url" jsaction="mousedown:ntp.fkbxclk" style="opacity: 0;"-->
+                <input id="q" aria-hidden="true" autocomplete="off" name="q" tabindex="-1" jsaction="mousedown:ntp.fkbxclk" style="opacity: 1;" placeholder="" locale-key="search" locale-attr="placeholder">
+                <div id="fkbx_crt"></div>
+                <div id="fkbx-spch" tabindex="0" aria-label="" style="display: block;" locale-key="search.voice" locale-attr="aria-label"></div>
+                <div id="fkbx-hspch" tabindex="0" aria-label="" style="display: none;" locale-key="search.sayog" locale-attr="aria-label"></div>
+                <div id="fkbx-hht" class="fkbx-hht-s" style="display: none;" locale-key="search.sayog"></div>
+              </div>
+              <div class="progress" style="position: absolute; left: 0; bottom: 0;"><div class="indeterminate"></div></div>
+            </form>
+          </div>
+          <div id="cards">
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="button-round" label="" id="button-clear" locale-key="card.clear" locale-attr="label"><img src="./images/icon-clear-dark.png"></div>
+        <div class="footer-text">Mockup by Maik Macho; Google, Google Now and Google APIs by Google.</div>
+      </div>
+    </div>
+    <div id="float-outer">
+      <div id="dark">
+      </div>
+      <div id="float">
+        <div id="float-inner">
+          <div class="button-round" id="button-g"><img src="./images/icon-g-big.png"></div>
+          <div id="speech-outer">
+            <div id="speech" locale-key="search.voice.now"></div><div id="speech-approx" locale-key="search.voice.example"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="menu-add-outer">
+      <div id="light">
+      </div>
+      <div id="menu-add">
+      </div>
+    </div>
+    <script>
+      function idify(str) {
+        return encodeURIComponent(str).replace(/\%|\(|\)|\#|\.|\[|\]|\(|\}|\:/g, "");
+      };
+      
+      var animating = 0;
+      $(document).ready(function() {
+        $("#fkbx>input").autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: "https://suggestqueries.google.com/complete/search?client=chrome&q="+encodeURIComponent(request.term),
+              dataType: "jsonp",
+              cache: true,
+              success: function(data) {
+                response(data[1]);
+              }
+            });
+          },
+          minLength: 3,
+          delay: 0,
+          appendTo: "#toolbar"
+        });
+        
+        setTimeout(function() {
+          var cookie = localStorage.getItem("pinned");
+          if (cookie && cookie.indexOf("[") == 0) {
+            var pinned = JSON.parse(cookie);
+            for (var i = 0; i < pinned.length; i++) {
+              var card = pinned[i];
+              window[card.reloader].addCard(card, function() {}, function() {});
+            }
+          }
+          $(".progress").css("background-color", "rgba(255, 255, 255, 0)");
+          $(".progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+        }, 2000);
+        
+        $(".card").each(function() {
+          animateCard($(this));
+        });
+        
+        $("#button-add").click(function() {
+          if (buttonAddMenuVisible) {
+            buttonAddMenuHide();
+            return;
+          }
+          
+          if ($("#fkbx").offset().top < $(window).scrollTop()) {
+            $("body, html").velocity({scrollTop: 0}, 300);
+            return;
+          }
+          
+          var query = $("#fkbx>input").val();
+          $("#fkbx>input").val("");
+          handleQuery(query);
+        });
+        
+        $("#button-clear").click(function() {
+          $(".tooltip-label").remove();
+          $(".card").each(function() {
+            removeCard($(this));
+          });
+          $("html, body").velocity({
+            scrollTop: 0
+          }, 300);
+        });
+        
+        if ($(".card").length < 3) {
+          $("#button-clear").css("display", "none");
+        }
+        
+        $("#button-add").on("contextmenu", buttonAddMenuShow);
+        var buttonAddMenuTimeout;
+        $("#button-add").bind("touchstart", function() {
+          buttonAddMenuTimeout = setTimeout(buttonAddMenuShow, 1000);
+        });
+        $("#button-add").bind("touchend", function() {
+          clearTimeout(buttonAddMenuTimeout);
+        });
+      });
+      
+      function handleQuery(query, i) {
+        var success = function() {
+          $(".progress").css("background-color", "rgba(255, 255, 255, 0)");
+          $(".progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+        };
+        var single = false;
+        if (typeof i == "string") {
+          i = sources.indexOf(window[i]);
+          single = true;
+        }
+        if (i == undefined) {
+          i = 0;
+        }
+        if (i < 0 || i >= sources.length) {
+          success();
+          return;
+        }
+        $(".progress").css("background-color", sources[i].colors.bg);
+        if ((sources[i].colors.fg || "-dark") == "-dark") {
+          $(".progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).darken(20).toRgbString());
+        } else {
+          $(".progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).lighten(20).toRgbString());
+        }
+        sources[i].handleQuery(query, success, single ? success : function() {
+          handleQuery(query, i+1);
+        });
+      }
+      
+      function pinCard(card) {
+        var cards = [];
+        try {
+          cards = JSON.parse(localStorage.getItem("pinned") || "[]");
+        } catch (e) {
+          cards = [];
+        };
+        if (!cards) {
+          cards = [];
+        }
+        for (var i = 0; i < cards.length; i++) {
+          if (cards[i].id == card.id && cards[i].reloader == card.reloader) {
+            return;
+          }
+        }
+        cards.push(card);
+        localStorage.setItem("pinned", JSON.stringify(cards));
+      };
+      
+      function unpinCard(card) {
+        var cards = [];
+        try {
+          cards = JSON.parse(localStorage.getItem("pinned") || "[]");
+        } catch (e) {
+          cards = [];
+        };
+        if (!cards) {
+          cards = [];
+        }
+        var id = card.attr("id");
+        for (var i = 0; i < cards.length; i++) {
+          if (cards[i].id+"-"+cards[i].reloader == id) {
+            cards.splice(i, 1);
+            break;
+          }
+        }
+        localStorage.setItem("pinned", JSON.stringify(cards));
+      };
+      
+      function animateCard(card) {
+        if (card.css("opacity") != "0") {
+          return;
+        }
+        card.css("opacity", "0.01");
+        card.css("marginTop", $(window).height()*0.6);
+        card.css("marginBottom", 30-$(window).height()*0.6);
+        card.delay(75*animating).velocity({
+          marginTop: 8,
+          marginBottom: 0,
+          opacity: 1
+        }, 400,
+        function() {animating--;});
+        animating++;
+      };
+      
+      function swapCards(cardUp, cardDown) {
+        cardUp.before(cardDown);
+        var cards = [];
+        try {
+          cards = JSON.parse(localStorage.getItem("pinned") || "[]");
+        } catch (e) {
+          cards = [];
+        };
+        if (!cards || cards.length == 0) {
+          return;
+        }
+        var ids = {up: cardUp.attr("id"), down: cardDown.attr("id")};
+        var indexes = {up: -1, down: -1};
+        for (var i = 0; i < cards.length; i++) {
+          if (cards[i].id+"-"+cards[i].reloader == ids.up) {
+            indexes.up = i;
+          }
+          if (cards[i].id+"-"+cards[i].reloader == ids.down) {
+            indexes.down = i;
+          }
+        }
+        if (indexes.up < 0 || indexes.up >= cards.length || indexes.down < 0 || indexes.down >= cards.length) {
+          return;
+        }
+        var card = cards[indexes.down];
+        cards[indexes.down] = cards[indexes.up];
+        cards[indexes.up] = card;
+        localStorage.setItem("pinned", JSON.stringify(cards));
+      };
+      
+      function appendCard(card) {
+        $("#cards").append(card);
+        var buttons = $("<div class=\"card-buttons\"></div>");
+        //BUTTONS
+        //BUTTON TOP
+        var buttonTop = $("<div class=\"card-button card-button-top\" label=\""+getLocalized("card.top")+"\"><img src=\"./images/icon-top-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-top-small.png\" class=\"card-button-img-white\"></div>");
+        buttonTop.click(function() {
+          swapCards($(".card").first(), card);
+        });
+        addLabelListener(buttonTop);
+        buttons.append(buttonTop);
+        //BUTTON DOWN
+        var buttonDown = $("<div class=\"card-button card-button-down\" label=\""+getLocalized("card.down")+"\"><img src=\"./images/icon-down-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-down-small.png\" class=\"card-button-img-white\"></div>");
+        buttonDown.click(function() {
+          swapCards(card, card.next(".card"));
+        });
+        addLabelListener(buttonDown);
+        buttons.append(buttonDown);
+        //BUTTON REMOVE
+        var buttonRemove = $("<div class=\"card-button card-button-clear\" label=\""+getLocalized("card.remove")+"\"><img src=\"./images/icon-remove-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-remove-small.png\" class=\"card-button-img-white\"></div>");
+        buttonRemove.click(function() {
+           card.velocity({
+              marginLeft: $(window).width()*0.6,
+              marginRight: -$(window).width()*0.6,
+              opacity: 0,
+            }, 300,
+            function() {removeCard(card);});
+        });
+        addLabelListener(buttonRemove);
+        buttons.append(buttonRemove);
+        //BUTTONS END
+        card.append(buttons);
+        var swiped = false;
+        var swiping = false;
+        var swipeStartX = 0;
+        var swipeStartY = 0;
+        var cardXStart = card.offset().left;
+        card.bind("mousedown touchstart", function(event) {
+          if (swiped) {
+            return;
+          }
+          event = (event.originalEvent.touches || [event])[0];
+          swiping = true;
+          swipeStartX = event.pageX;
+          swipeStartY = event.pageY;
+        });
+        $(document).bind("mousemove touchmove", function(event) {
+          if (swiped) {
+            return;
+          }
+          if (swiping) {
+            event = (event.originalEvent.touches || [event])[0];
+            if (Math.max(event.pageY- swipeStartY, -(event.pageY - swipeStartY)) > 24) {
+              card.css("marginLeft", 0);
+              card.css("marginRight", 0);
+              card.css("opacity", 1);
+              swiping = false;
+              return;
+            }
+            card.css("marginLeft", Math.round(event.pageX - swipeStartX));
+            card.css("marginRight", -Math.round(event.pageX - swipeStartX));
+            card.css("opacity", Math.cos(((card.offset().left - cardXStart) / $(window).width())*2*Math.PI)*0.75+0.25);
+          }
+        });
+        $(document).bind("mouseup touchend", function(event) {
+          if (swiped) {
+            return;
+          }
+          if (!swiping) {
+            return;
+          }
+          event = (event.originalEvent.touches || [event])[0];
+          swiping = false;
+          if (card.css("opacity") > 0.5) {
+            card.velocity({
+              marginLeft: 0,
+              marginRight: 0,
+              opacity: 1
+            }, 300);
+          } else {
+            swiped = true;
+            removeCard(card);
+          }
+        });
+        if ($(".card").length >= 3) {
+          $("#button-clear").css("opacity", "0");
+          $("#button-clear").css("display", "inline-block");
+          $("#button-clear").css("opacity", 1);
+        }
+      }
+      
+      function removeCard(card) {
+        var height = card.outerHeight();
+        unpinCard(card);
+        var cards = $(".card");
+        var index = cards.length;
+        var cardId = card.attr("id");
+        for (var i = 0; i < cards.length; i++) {
+          var card_ = $(cards[i]);
+          if (card_.attr("id") == cardId) {
+            index = i;
+            continue;
+          }
+          if (i < index) {
+            continue;
+          }
+          card_.css("marginTop", height);
+          card_.css("marginBottom", 30 - height);
+          card_.velocity({
+            marginTop: 8,
+            marginBottom: 0
+          }, 400);
+        }
+        card.remove();
+        if ($(".card").length < 3) {
+          $("#button-clear").css("opacity", 0);
+        }
+      };
+      
+      var buttonAddMenuVisible = false;
+      
+      function buttonAddMenuShow() {
+        if (buttonAddMenuVisible) {
+          return true;
+        }
+        buttonAddMenuVisible = true;
+        
+        var buttonAdd = $("#button-add");
+        var buttonAddBackground = buttonAdd.css("background-color");
+        
+        $("#button-add>img").css("transform", "rotate(45deg)");
+        
+        var menu = $("#menu-add");
+        menu.empty();
+        var menuOuter = $("#menu-add-outer");
+        menuOuter.css("pointer-events", "auto");
+        menuOuter.css("display", "block");
+        $("#light").css("opacity", 1);
+        $("#light").click(buttonAddMenuHide);
+        
+        var showButtons = function() {
+          var right = $(window).width() - (buttonAdd.offset().left + buttonAdd.outerWidth());
+          for (var i = 0; i < sources.length; i++) {
+            var text = getLocalized(sources[i].name);
+            var item = $("<div class=\"button-round button-add-source\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
+            menu.append(item);
+            setTimeout((function(item, i) {return function() {
+              item.css("opacity", 1);
+              item.css("transform", "scale(1)");
+            }})(item, i), 25*i);
+            addLabelListener(item);
+            item.click(function() {
+              var query = $("#fkbx>input").val();
+              $("#fkbx>input").val("");
+              handleQuery(query, $(this).attr("source"));
+              buttonAddMenuHide();
+            });
+          }
+        };
+        
+        if ($(window).width() > 800) {
+          buttonAdd.velocity({
+            top: 262 + $(window).scrollTop() + ($(window).height()-370)
+          }, 300);
+          setTimeout(showButtons, 250);
+        } else {
+          showButtons();
+        }
+        buttonAdd.attr("menu", "true");
+        buttonAdd.css("background-color", "#FF1744");
+        buttonAdd.attr("label", getLocalized("card.add.close"));
+        $("#button-add").attr("label-position", "left");
+        
+        return false;
+      }
+      
+      function buttonAddMenuHide() {
+        if (!buttonAddMenuVisible) {
+          return;
+        }
+        buttonAddMenuVisible = false;
+        
+        $("#button-add>img").css("transform", "rotate(0deg)");
+        
+        var menuOuter = $("#menu-add-outer");
+        menuOuter.css("pointer-events", "none");
+        $("#light").css("opacity", 0);
+        
+        var buttons = $(".button-add-source");
+        buttons.each(function(i) {
+          setTimeout((function(item, i) {return function() {
+            item = $(item);
+            item.css("opacity", 0);
+            item.css("transform", "scale(0)");
+          }})(this, i), 25*(buttons.length-1)*i);
+        });
+        
+        
+        if ($(window).width() > 800) {
+          $("#button-add").velocity({
+            top: 262 + $(window).scrollTop() + ($(window).height()-370) * Math.max(Math.sin(Math.PI * Math.min($(window).scrollTop() / ($(window).height()-370), 1) - Math.PI/2) * 0.5 + 0.5, 0)
+          }, 300);
+        }
+        $("#button-add").attr("menu", null);
+        $("#button-add").css("background-color", "#00E676");
+        $("#button-add").attr("label", getLocalized("card.add"));
+        $("#button-add").attr("label-position", null);
+      }
+    </script>
+    
+  </body>
+</html>
