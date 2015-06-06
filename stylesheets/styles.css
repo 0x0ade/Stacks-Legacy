@@ -567,23 +567,23 @@ code {
   font-size: 13px;
   margin: 0 4px;
   padding: 4px 6px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
-  border-radius: 3px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
 }
 
 pre {
   padding: 8px 15px;
   background: #191919;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -o-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -khtml-border-radius: 3px;
-  border-radius: 3px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
   border: 1px solid #121212;
   overflow: auto;
   overflow-y: hidden;
@@ -649,11 +649,23 @@ dt {
   font-size: 14px;
   display: inline-block;
   text-align: center;
-  border-radius: 3px;
+  text-transform: uppercase;
+  border-radius: 2px;
 }
 .button:hover {
   transform: translateZ(0);
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px rgba(0, 0, 0, 0.125);
+}
+
+.button-flat {
+  font: 16px "Roboto Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 10px 12px;
+  margin-top: 6px;
+  line-height: 14px;
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .tooltip-label {
@@ -664,7 +676,7 @@ dt {
   margin: 16px 0 0 0;
   padding: 4px 4px 4px 4px;
   box-shadow: inset 0px -2px 0px rgba(255, 255, 255, 0.175);
-  border-radius: 3px;
+  border-radius: 2px;
   pointer-events: none;
 }
 .tooltip-label-bottom:before {
@@ -732,7 +744,7 @@ dt {
   padding: 0 0 0 0;
   transform: translateZ(0);
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px rgba(0, 0, 0, 0.125);
-  border-radius: 3px;
+  border-radius: 2px;
   background-color: #ffffff;
 }
 #toolbar:hover {
@@ -1126,7 +1138,7 @@ dt {
   background-color: #ffffff;
   transform: translateZ(0);
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.1425), 0px 0px 8px rgba(0, 0, 0, 0.125);
-  border-radius: 3px;
+  border-radius: 2px;
   /*color: rgba(0, 0, 0, 0.87);*/
   color: rgba(0, 0, 0, 0.65);
   font-size: 16px;
