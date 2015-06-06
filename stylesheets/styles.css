@@ -516,7 +516,7 @@ a {
   display: inline-block;
   transition-duration: 0.3s;
   transition-property: color;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   color: rgba(1, 87, 155, 0.87);
   font-weight: 400;
   text-decoration: none;
@@ -638,7 +638,7 @@ dt {
 .button {
   transition-duration: 0.3s;
   transition-property: color, transform, box-shadow;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   color: rgba(0, 0, 0, 0.87);
   transform: translateY(-1px);
   box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.1), 0px 0px 32px rgba(0, 0, 0, 0.15);
@@ -728,7 +728,7 @@ dt {
   position: relative;
   transition-duration: 0.3s;
   transition-property: transform, box-shadow;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   padding: 0 0 0 0;
   transform: translateZ(0);
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px rgba(0, 0, 0, 0.125);
@@ -922,7 +922,7 @@ dt {
 .button-round {
   transition-duration: 0.3s;
   transition-property: opacity, transform, background-color, box-shadow;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   transform: translateZ(0);
   position: absolute;
   width: 56px;
@@ -930,17 +930,17 @@ dt {
   z-index: 96;
   background-color: #ffffff;
   border-radius: 28px;
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 6px 6px rgba(0, 0, 0, 0.1425), 0px 0px 8px rgba(0, 0, 0, 0.125);
   cursor: pointer;
 }
 .button-round:hover {
   transform: translateY(-2px);
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 4px 8px rgba(0, 0, 0, 0.175), 0px 0px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 4px 8px rgba(0, 0, 0, 0.175), 0px 12px 12px rgba(0, 0, 0, 0.1275), 0px 0px 32px rgba(0, 0, 0, 0.15);
 }
 .button-round img {
   transition-duration: 0.15s;
   transition-property: transform;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   margin: 16px 0 0 16px;
   width: 24px;
   height: 24px;
@@ -1077,7 +1077,7 @@ dt {
 #light {
   transition-duration: 0.15s;
   transition-property: opacity;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1119,13 +1119,13 @@ dt {
   opacity: 0;
   transition-duration: 0.3s;
   transition-property: transform, box-shadow;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   z-index: 48;
   margin: 8px 0 0 0;
   padding: 12px 12px 4px 12px;
   background-color: #ffffff;
   transform: translateZ(0);
-  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px rgba(0, 0, 0, 0.125);
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px rgba(0, 0, 0, 0.1425), 0px 0px 8px rgba(0, 0, 0, 0.125);
   border-radius: 3px;
   /*color: rgba(0, 0, 0, 0.87);*/
   color: rgba(0, 0, 0, 0.65);
@@ -1140,7 +1140,7 @@ dt {
 .card:hover {
   z-index: 51;
   transform: translateY(-2px);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.175), 0px 0px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.175), 0px 8px 8px rgba(0, 0, 0, 0.1225), 0px 0px 32px rgba(0, 0, 0, 0.15);
 }
 .card h2, .card h2 a {
   font-family: 'Roboto Light', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1176,7 +1176,7 @@ dt {
   position: relative;
   transition-duration: 0.3s;
   transition-property: background;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   background-color: rgba(0, 0, 0, 0);
   width: 18px;
   height: 18px;
@@ -1191,7 +1191,7 @@ dt {
 .card-button-img-dark, .card-button-img-white {
   transition-duration: 0.3s;
   transition-property: opacity;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .card-button-img-dark {
   opacity: 0.5;
