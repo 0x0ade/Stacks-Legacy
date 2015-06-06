@@ -84,7 +84,7 @@ mapsDirections.handleQuery = function(query, success, fail, data, card) {
   }, function(directions, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       data.content = directions;
-      data.id = idify(directions.ic.origin+"+-+"+directions.ic.destination);
+      data.id = idify(directions.request.origin+"+-+"+directions.request.destination);
       data.map_query = query;
       mapsDirections.addCard(data, success, fail);
     } else {
