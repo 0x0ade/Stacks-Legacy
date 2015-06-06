@@ -310,23 +310,23 @@
       
       function appendCard(card) {
         $("#cards").append(card);
+        //card buttons
         var buttons = $("<div class=\"card-buttons\"></div>");
-        //BUTTONS
-        //BUTTON TOP
+        //card button down
         var buttonTop = $("<div class=\"card-button card-button-top\" label=\""+localized("card.top")+"\"><img src=\"./images/icon-top-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-top-small.png\" class=\"card-button-img-white\"></div>");
         buttonTop.click(function() {
           swapCards($(".card").first(), card);
         });
         addLabelListener(buttonTop);
         buttons.append(buttonTop);
-        //BUTTON DOWN
+        //card button down
         var buttonDown = $("<div class=\"card-button card-button-down\" label=\""+localized("card.down")+"\"><img src=\"./images/icon-down-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-down-small.png\" class=\"card-button-img-white\"></div>");
         buttonDown.click(function() {
           swapCards(card, card.next(".card"));
         });
         addLabelListener(buttonDown);
         buttons.append(buttonDown);
-        //BUTTON REMOVE
+        //card button remove
         var buttonRemove = $("<div class=\"card-button card-button-clear\" label=\""+localized("card.remove")+"\"><img src=\"./images/icon-remove-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-remove-small.png\" class=\"card-button-img-white\"></div>");
         buttonRemove.click(function() {
            card.velocity({
@@ -338,8 +338,8 @@
         });
         addLabelListener(buttonRemove);
         buttons.append(buttonRemove);
-        //BUTTONS END
         card.append(buttons);
+        //card swipe
         var swiped = false;
         var swiping = false;
         var swipeStartX = 0;
@@ -392,6 +392,17 @@
             removeCard(card);
           }
         });
+        //card color (WIP)
+        /*
+        var color = tinycolor(sources[Math.floor(Math.random()*sources.length)].colors.bg).darken(25);
+        card.css("box-shadow", "0px 2px 0px " + color.setAlpha(0.3).toRgbString());
+        card.hover(function() {
+          card.css("box-shadow", "0px 4px 8px " + color.setAlpha(0.375).toRgbString());
+        }, function() {
+          card.css("box-shadow", "0px 2px 0px " + color.setAlpha(0.3).toRgbString());
+        });
+        */
+        //card clear
         if ($(".card").length >= 3) {
           $("#button-clear").css("opacity", "0");
           $("#button-clear").css("display", "inline-block");
