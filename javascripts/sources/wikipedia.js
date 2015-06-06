@@ -46,7 +46,12 @@ wikipedia.addCard = function(data, success, fail) {
     success();
     return;
   }
-  var card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p>"+(data.image?"<span style=\"max-height: 312px; display: block; overflow: hidden; margin: 0 -12px 8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span>":"")+"<span>"+data.content+"</span></p></div>");
+  var card;
+  if (data.image) {
+    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span style=\"position: absolute; bottom: 0; color: white; margin: -96px 0 0 -12px; padding: 96px 12px 8px 12px; background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.45) 30%, rgba(0, 0, 0, 0) 100%)\">"+data.content+"</span></p></div>");
+  } else {
+    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span>"+data.content+"</span></p></div>");
+  }
   appendCard(card);
   animateCard(card);
   if (!data.reloader) {
