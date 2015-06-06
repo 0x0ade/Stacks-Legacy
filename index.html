@@ -462,7 +462,7 @@
         var showButtons = function() {
           var right = $(window).width() - (buttonAdd.offset().left + buttonAdd.outerWidth());
           for (var i = 0; i < sources.length; i++) {
-            var text = localized(sources[i].name);
+            var text = localized("sources."+sources[i].name);
             var item = $("<div class=\"button-round button-add-source\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
             menu.append(item);
             setTimeout((function(item, i) {return function() {
