@@ -48,7 +48,7 @@ wikipedia.addCard = function(data, success, fail) {
   }
   var card;
   if (data.image) {
-    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span style=\"position: absolute; bottom: 0; color: white; text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); margin: -114px 0 0 -12px; padding: 114px 12px 8px 12px; background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.50) 30%, rgba(0, 0, 0, 0) 100%)\">"+data.content+"</span></p></div>");
+    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span style=\"position: absolute; bottom: 0; color: white; text-shadow: 0 0 4px rgba(255, 255, 255, 0.725); margin: -128px 0 0 -12px; padding: 128px 12px 8px 12px; background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.625) 30%, rgba(0, 0, 0, 0) 100%)\">"+data.content+"</span></p></div>");
   } else {
     card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span>"+data.content+"</span></p></div>");
   }
