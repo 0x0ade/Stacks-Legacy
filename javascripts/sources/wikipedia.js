@@ -29,7 +29,7 @@ wikipedia.handleQuery = function(query, success, fail) {
       fail();
       return;
     }
-    $.getJSON("https://"+loc.lang+".wikipedia.org/w/api.php?continue=&format=json&action=query&prop=pageimages&pithumbsize=128&titles="+encodeURIComponent(query)+"&callback=?", function(response) {
+    $.getJSON("https://"+loc.lang+".wikipedia.org/w/api.php?continue=&format=json&action=query&prop=pageimages&pithumbsize=650&titles="+encodeURIComponent(query)+"&callback=?", function(response) {
       var page = response.query.pages[data.id.toString()];
       if (page.thumbnail) {
         data.image = page.thumbnail.source;
@@ -46,7 +46,7 @@ wikipedia.addCard = function(data, success, fail) {
     success();
     return;
   }
-  var card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p>"+(data.image?"<img src=\""+data.image+"\" style=\"display: inline-block; width: 128px; float: right; margin: 0 4px 0 4px\">":"")+"<span>"+data.content+"</span></p><div style=\"clear: both;\"></div></div>");
+  var card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p>"+(data.image?"<span style=\"max-height: 312px; display: block; overflow: hidden; margin: 0 -12px 8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span>":"")+"<span>"+data.content+"</span></p></div>");
   appendCard(card);
   animateCard(card);
   if (!data.reloader) {
