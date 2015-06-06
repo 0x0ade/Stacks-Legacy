@@ -61,5 +61,5 @@ wikipedia.name = "wikipedia";
 
 window.sources = window.sources || [];
 window.sources.push(wikipedia);
-langs["en"].sources["wikipedia"] = "Wikipedia";
-langs["de"].sources["wikipedia"] = "Wikipedia";
+localize.addTranslation("en", "sources.wikipedia", "Wikipedia");
+localize.addTranslation("de", "sources.wikipedia", "Wikipedia");

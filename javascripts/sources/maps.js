@@ -128,5 +128,5 @@ maps.name = "maps";
 
 window.sources = window.sources || [];
 window.sources.push(maps);
-langs["en"].sources["maps"] = "Google Maps";
-langs["de"].sources["maps"] = "Google Maps";
+localize.addTranslation("en", "sources.maps", "Google Maps");
+localize.addTranslation("de", "sources.maps", "Google Maps");

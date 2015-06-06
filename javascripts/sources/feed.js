@@ -56,5 +56,5 @@ feed.name = "feed";
 
 window.sources = window.sources || [];
 window.sources.push(feed);
-langs["en"].sources["feed"] = "RSS Feed";
-langs["de"].sources["feed"] = "RSS-Feed";
+localize.addTranslation("en", "sources.feed", "RSS Feed");
+localize.addTranslation("de", "sources.feed", "RSS-Feed");

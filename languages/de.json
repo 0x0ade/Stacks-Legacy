@@ -1,0 +1,38 @@
+{
+  "search": {
+    "main": "Suchen",
+    "sayog": "\"Ok Google\" sagen",
+    "voice": {
+      "main": "Sprachsuche",
+      "now": "Jetzt sprechen...",
+      "example": "Beispiel: \"Wetter\"",
+      "allow": "Bitte die Spracherkennung aktivieren.",
+      "error": "Irgendetwas ging schief."
+    }
+  },
+  
+  "card": {
+    "add": "Karte hinzufügen",
+    "close": "Schließen",
+    "clear": "Alle Entfernen",
+    "top": "Nach ganz oben",
+    "down": "Nach unten",
+    "remove": "Entfernen"
+  },
+  
+  "cbar": {
+    "me": "+Ich",
+    "gmail": "Gmail",
+    "images": "Bilder"
+  },
+  
+  "gcard": {
+    "in": " in "
+  },
+  
+  "doodle": {
+    "enable": "Google Doodle"
+  },
+  
+  "sources": {}
+}

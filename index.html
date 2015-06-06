@@ -22,6 +22,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="./javascripts/velocity.min.js"></script>
     <script src="./javascripts/location.js"></script>
+    <script src="./javascripts/localize.js"></script>
     <script src="./javascripts/scrolltoolbar.js" async defer></script>
     <script src="./javascripts/header.js" async defer></script>
     <script src="./javascripts/doodle.js" async defer></script>
@@ -51,14 +52,14 @@
     <div class="header">
     </div>
     <div id="chromebar">
-      <a href="https://plus.google.com/" id="cbar_me" locale-key="cbar.me">+Me</a>
-      <a href="https://mail.google.com/mail/" id="cbar_gmail" locale-key="cbar.gmail">Gmail</a>
-      <a href="https://images.google.com/" id="cbar_images" locale-key="cbar.images">Images</a>
+      <a href="https://plus.google.com/" id="cbar_me" localize="cbar.me">+Me</a>
+      <a href="https://mail.google.com/mail/" id="cbar_gmail" localize="cbar.gmail">Gmail</a>
+      <a href="https://images.google.com/" id="cbar_images" localize="cbar.images">Images</a>
       <a href="https://www.google.com/" id="cbar_google">google.com</a>
     </div>
     <form action="#" id="checkbox-doodle-form"  style="display: none;"><p>
       <input type="checkbox" id="checkbox-doodle" checked="checked" onclick="setDoodleEnabled(this.checked)"/>
-      <label for="checkbox-doodle" locale-key="doodle.enable"></label>
+      <label for="checkbox-doodle" localize="doodle.enable"></label>
     </p></form>
     <div class="doodle-shadow">
     </div>
@@ -67,7 +68,7 @@
     <div class="main">
       <div class="content">
         <section>
-          <div class="button-round" id="button-add" label="" locale-key="card.add" locale-attr="label">
+          <div class="button-round" id="button-add" label="" localize="card.add" localize-attr="label">
             <img src="./images/icon-add-dark.png">
           </div>
           <div id="toolbar">
@@ -76,11 +77,11 @@
               <div class="" id="fkbx">
                 <!--div id="fkbx-text">Search</div-->
                 <!--input id="q" aria-hidden="true" autocomplete="off" name="q" tabindex="-1" type="url" jsaction="mousedown:ntp.fkbxclk" style="opacity: 0;"-->
-                <input id="q" aria-hidden="true" autocomplete="off" name="q" tabindex="-1" jsaction="mousedown:ntp.fkbxclk" style="opacity: 1;" placeholder="" locale-key="search" locale-attr="placeholder">
+                <input id="q" aria-hidden="true" autocomplete="off" name="q" tabindex="-1" jsaction="mousedown:ntp.fkbxclk" style="opacity: 1;" placeholder="" localize="search.main" localize-attr="placeholder">
                 <div id="fkbx_crt"></div>
-                <div id="fkbx-spch" tabindex="0" aria-label="" style="display: block;" locale-key="search.voice" locale-attr="aria-label"></div>
-                <div id="fkbx-hspch" tabindex="0" aria-label="" style="display: none;" locale-key="search.sayog" locale-attr="aria-label"></div>
-                <div id="fkbx-hht" class="fkbx-hht-s" style="display: none;" locale-key="search.sayog"></div>
+                <div id="fkbx-spch" tabindex="0" aria-label="" style="display: block;" localize="search.voice.main" localize-attr="aria-label"></div>
+                <div id="fkbx-hspch" tabindex="0" aria-label="" style="display: none;" localize="search.sayog" localize-attr="aria-label"></div>
+                <div id="fkbx-hht" class="fkbx-hht-s" style="display: none;" localize="search.sayog"></div>
               </div>
               <div class="progress" style="position: absolute; left: 0; bottom: 0;"><div class="indeterminate"></div></div>
             </form>
@@ -92,7 +93,7 @@
     </div>
     <div class="footer-wrapper">
       <div class="footer">
-        <div class="button-round" label="" id="button-clear" locale-key="card.clear" locale-attr="label"><img src="./images/icon-clear-dark.png"></div>
+        <div class="button-round" label="" id="button-clear" localize="card.clear" localize-attr="label"><img src="./images/icon-clear-dark.png"></div>
         <div class="footer-text">Mockup by Maik Macho; Google, Google Now and Google APIs by Google.</div>
       </div>
     </div>
@@ -103,7 +104,7 @@
         <div id="float-inner">
           <div class="button-round" id="button-g"><img src="./images/icon-g-big.png"></div>
           <div id="speech-outer">
-            <div id="speech" locale-key="search.voice.now"></div><div id="speech-approx" locale-key="search.voice.example"></div>
+            <div id="speech" localize="search.voice.now"></div><div id="speech-approx" localize="search.voice.example"></div>
           </div>
         </div>
       </div>
@@ -312,21 +313,21 @@
         var buttons = $("<div class=\"card-buttons\"></div>");
         //BUTTONS
         //BUTTON TOP
-        var buttonTop = $("<div class=\"card-button card-button-top\" label=\""+getLocalized("card.top")+"\"><img src=\"./images/icon-top-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-top-small.png\" class=\"card-button-img-white\"></div>");
+        var buttonTop = $("<div class=\"card-button card-button-top\" label=\""+localized("card.top")+"\"><img src=\"./images/icon-top-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-top-small.png\" class=\"card-button-img-white\"></div>");
         buttonTop.click(function() {
           swapCards($(".card").first(), card);
         });
         addLabelListener(buttonTop);
         buttons.append(buttonTop);
         //BUTTON DOWN
-        var buttonDown = $("<div class=\"card-button card-button-down\" label=\""+getLocalized("card.down")+"\"><img src=\"./images/icon-down-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-down-small.png\" class=\"card-button-img-white\"></div>");
+        var buttonDown = $("<div class=\"card-button card-button-down\" label=\""+localized("card.down")+"\"><img src=\"./images/icon-down-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-down-small.png\" class=\"card-button-img-white\"></div>");
         buttonDown.click(function() {
           swapCards(card, card.next(".card"));
         });
         addLabelListener(buttonDown);
         buttons.append(buttonDown);
         //BUTTON REMOVE
-        var buttonRemove = $("<div class=\"card-button card-button-clear\" label=\""+getLocalized("card.remove")+"\"><img src=\"./images/icon-remove-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-remove-small.png\" class=\"card-button-img-white\"></div>");
+        var buttonRemove = $("<div class=\"card-button card-button-clear\" label=\""+localized("card.remove")+"\"><img src=\"./images/icon-remove-small-dark.png\" class=\"card-button-img-dark\"><img src=\"./images/icon-remove-small.png\" class=\"card-button-img-white\"></div>");
         buttonRemove.click(function() {
            card.velocity({
               marginLeft: $(window).width()*0.6,
@@ -450,7 +451,7 @@
         var showButtons = function() {
           var right = $(window).width() - (buttonAdd.offset().left + buttonAdd.outerWidth());
           for (var i = 0; i < sources.length; i++) {
-            var text = getLocalized(sources[i].name);
+            var text = localized(sources[i].name);
             var item = $("<div class=\"button-round button-add-source\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
             menu.append(item);
             setTimeout((function(item, i) {return function() {
@@ -477,7 +478,7 @@
         }
         buttonAdd.attr("menu", "true");
         buttonAdd.css("background-color", "#FF1744");
-        buttonAdd.attr("label", getLocalized("card.add.close"));
+        buttonAdd.attr("label", localized("card.close"));
         $("#button-add").attr("label-position", "left");
         
         return false;
@@ -512,7 +513,7 @@
         }
         $("#button-add").attr("menu", null);
         $("#button-add").css("background-color", "#00E676");
-        $("#button-add").attr("label", getLocalized("card.add"));
+        $("#button-add").attr("label", localized("card.add"));
         $("#button-add").attr("label-position", null);
       }
     </script>

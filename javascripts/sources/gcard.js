@@ -30,7 +30,7 @@ function gcardProcess(query, data, success, fail) {
   }
   var cardTitle = card.find("#wob_loc").text() || query;
   if (cardTitle.indexOf("Ashburn") >= 0 && !(query.indexOf("Ashburn") >= 0 || loc.city.indexOf("Ashburn") >= 0)) {
-    gcard.handleQuery(query+getLocalized("gcard.in")+loc.city, success, fail);
+    gcard.handleQuery(query+localized("gcard.in")+loc.city, success, fail);
     return;
   }
   card.find("#wob_loc").remove(); //TITLE
@@ -70,5 +70,5 @@ gcard.name = "gcard";
 
 window.sources = window.sources || [];
 window.sources.push(gcard);
-langs["en"].sources["gcard"] = "Google";
-langs["de"].sources["gcard"] = "Google";
+localize.addTranslation("en", "sources.gcard", "Google");
+localize.addTranslation("de", "sources.gcard", "Google");
