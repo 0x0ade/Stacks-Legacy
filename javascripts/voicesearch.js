@@ -1,10 +1,14 @@
 window.voicesearch = {};
 window.voicesearch.hotwords = [
   "ok google",
-  "okay google"
+  "okay google",
+  "ok papyrus",
+  "okay papyrus",
+  "
   //custom hotwords go in here.
 ];
 //TODO load hotwords from local storage
+//TODO load locale-specific hotwords
 
 voicesearch.speech = new webkitSpeechRecognition();
 voicesearch.speechTimeout = null;
@@ -119,7 +123,7 @@ voicesearch.startListening = function() {
   voicesearch.speech.onerror = function(event) { 
     $("#speech").text(localized("search.voice.error"));
     $("#speech-approx").text("");
-    setTimeout(hideSpeechOverlay, 2000);
+    setTimeout(voicesearch.hideSpeechOverlay, 2000);
     voicesearch.stopListening(false);
   };
   voicesearch.speech.onstart = function(event) {
