@@ -1,27 +1,35 @@
-var speech = new webkitSpeechRecognition();
-var speechTimeout;
-var hotword = new webkitSpeechRecognition();
-var spoke = false;
-var animFloatShow;
+window.voicesearch = {};
+window.voicesearch.hotwords = [
+  "ok google",
+  "okay google"
+  //custom hotwords go in here.
+];
+//TODO load hotwords from local storage
+
+voicesearch.speech = new webkitSpeechRecognition();
+voicesearch.speechTimeout = null;
+voicesearch.hotword = new webkitSpeechRecognition();
+voicesearch.spoke = false;
+voicesearch.animFloatShow = null;
 
 $(document).ready(function() {
   $("#fkbx-spch, #fkbx-hspch").click(function(event) {
-    showSpeechOverlay();
-    startListening();
+    voicesearch.showSpeechOverlay();
+    voicesearch.startListening();
   });
   $("#dark").click(function() {
-    hideSpeechOverlay();
-    stopListening(false);
+    voicesearch.hideSpeechOverlay();
+    voicesearch.stopListening(false);
   });
   $("#button-g").click(function() {
-    hideSpeechOverlay();
-    stopListening(true);
+    voicesearch.hideSpeechOverlay();
+    voicesearch.stopListening(true);
   });
   
-  startHotword();
+  voicesearch.startHotword();
 });
 
-function showSpeechOverlay() {
+voicesearch.showSpeechOverlay = function() {
   var floatOuter = $("#float-outer");
   floatOuter.css("pointer-events", "auto");
   var startElem = $("#fkbx-spch");
@@ -33,7 +41,7 @@ function showSpeechOverlay() {
   floatOuter.css("webkitAnimationName", null);
   floatOuter.css("display", "block");
   floatOuter.css("opacity", 1);
-  if (!animFloatShow) {
+  if (!voicesearch.animFloatShow) {
     var styles = document.styleSheets;
     for (var i = 0; i < styles.length; i++) {
       if (!styles[i].cssRules) {
@@ -41,13 +49,13 @@ function showSpeechOverlay() {
       }
       for (var ii = 0; ii < styles[i].cssRules.length; ii++) {
         if (styles[i].cssRules[ii].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE && styles[i].cssRules[ii].name == "float-show") {
-          animFloatShow = styles[i].cssRules[ii];
-          animFloatShow.deleteRule("0%");
-    animFloatShow.deleteRule("50%");
-    animFloatShow.deleteRule("100%");
-    animFloatShow.appendRule("0% {top: "+(startY-$(window).scrollTop()-1)+"px; left: "+(startX-$(window).scrollLeft()-1)+"px; width: 2px; height: 2px; border-radius: "+Math.round(Math.max($(window).width(), $(window).height())/2)+"px;}");
-    animFloatShow.appendRule("50% {top: "+Math.round($(window).height()/2 - Math.round(Math.max($(window).width(), $(window).height())/2))+"px; left: "+Math.round($(window).width()/2 - Math.round(Math.max($(window).width(), $(window).height())/2))+"px; width: "+Math.round(Math.max($(window).width(), $(window).height()))+"px; height: "+Math.round(Math.max($(window).width(), $(window).height()))+"px;}");
-    animFloatShow.appendRule("100% {border-radius: 0;}");
+          voicesearch.animFloatShow = styles[i].cssRules[ii];
+          voicesearch.animFloatShow.deleteRule("0%");
+          voicesearch.animFloatShow.deleteRule("50%");
+          voicesearch.animFloatShow.deleteRule("100%");
+          voicesearch.animFloatShow.appendRule("0% {top: "+(startY-$(window).scrollTop()-1)+"px; left: "+(startX-$(window).scrollLeft()-1)+"px; width: 2px; height: 2px; border-radius: "+Math.round(Math.max($(window).width(), $(window).height())/2)+"px;}");
+          voicesearch.animFloatShow.appendRule("50% {top: "+Math.round($(window).height()/2 - Math.round(Math.max($(window).width(), $(window).height())/2))+"px; left: "+Math.round($(window).width()/2 - Math.round(Math.max($(window).width(), $(window).height())/2))+"px; width: "+Math.round(Math.max($(window).width(), $(window).height()))+"px; height: "+Math.round(Math.max($(window).width(), $(window).height()))+"px;}");
+          voicesearch.animFloatShow.appendRule("100% {border-radius: 0;}");
           break;
         }
       }
@@ -62,7 +70,7 @@ function showSpeechOverlay() {
   }, 500);
 };
 
-function hideSpeechOverlay() {
+voicesearch.hideSpeechOverlay = function() {
   $("#float-outer").css("pointer-events", "none");
   $("#float-outer").velocity({
     opacity: 0
@@ -71,16 +79,16 @@ function hideSpeechOverlay() {
   });
 };
 
-function startListening() {
-  $("#speech").text(getLocalized("search.voice.allow"));
+voicesearch.startListening = function() {
+  $("#speech").text(localized("search.voice.allow"));
   $("#speech-approx").text("");
-  spoke = false;
+  voicesearch.spoke = false;
   
-  speech.continuous = true;
-  speech.interimResults = true;
-  speech.onresult = function(event) {
+  voicesearch.speech.continuous = true;
+  voicesearch.speech.interimResults = true;
+  voicesearch.speech.onresult = function(event) {
     if (typeof(event.results) == "undefined") {
-      stopListening(true);
+      voicesearch.stopListening(true);
       return;
     }
     var final = "";
@@ -95,55 +103,55 @@ function startListening() {
       }
     }
     
-    if (isFinal && !speechTimeout) {
-      if (speechTimeout) {
-        clearTimeout(speechTimeout);
+    if (isFinal && !voicesearch.speechTimeout) {
+      if (voicesearch.speechTimeout) {
+        clearTimeout(voicesearch.speechTimeout);
       }
-      speechTimeout = setTimeout(function() {stopListening(true)}, 2000);
-    } else if (!isFinal && speechTimeout) {
-      clearTimeout(speechTimeout);
-      speechTimeout = null;
+      voicesearch.speechTimeout = setTimeout(function() {voicesearch.stopListening(true)}, 2000);
+    } else if (!isFinal && voicesearch.speechTimeout) {
+      clearTimeout(voicesearch.speechTimeout);
+      voicesearch.speechTimeout = null;
     }
     $("#speech").text(final);
     $("#speech-approx").text(approx);
-    spoke = true;
+    voicesearch.spoke = true;
   };
-  speech.onerror = function(event) { 
-    $("#speech").text(getLocalized("search.voice.error"));
+  voicesearch.speech.onerror = function(event) { 
+    $("#speech").text(localized("search.voice.error"));
     $("#speech-approx").text("");
     setTimeout(hideSpeechOverlay, 2000);
-    stopListening(false);
+    voicesearch.stopListening(false);
   };
-  speech.onstart = function(event) {
-    $("#speech").text(getLocalized("search.voice.now"));
-    $("#speech-approx").text(getLocalized("search.voice.example"));
+  voicesearch.speech.onstart = function(event) {
+    $("#speech").text(localized("search.voice.now"));
+    $("#speech-approx").text(localized("search.voice.example"));
   };
-  speech.lang = loc.lang+"-"+loc.country;
-  speech.start();
+  voicesearch.speech.lang = loc.lang+"-"+loc.country;
+  voicesearch.speech.start();
 }
 
-function stopListening(parseQuery) {
-  if (speechTimeout) {
-    clearTimeout(speechTimeout);
-    speechTimeout = null;
+voicesearch.stopListening = function(parseQuery) {
+  if (voicesearch.speechTimeout) {
+    clearTimeout(voicesearch.speechTimeout);
+    voicesearch.speechTimeout = null;
   }
-  speech.onresult = null;
-  speech.stop();
-  if (parseQuery && spoke) {
+  voicesearch.speech.onresult = null;
+  voicesearch.speech.stop();
+  if (parseQuery && voicesearch.spoke) {
     var query = $("#speech").text()+" "+$("#speech-approx").text();
     location.href = "https://www.google.com/search?gs_ivs=1&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " ");
   } else {
-    startHotword();
+    voicesearch.startHotword();
   }
-  spoke = false;
+  voicesearch.spoke = false;
 }
 
-function startHotword() {
-  hotword.continuous = true;
-  hotword.interimResults = true;
-  hotword.onresult = function(event) {
+voicesearch.startHotword = function() {
+  voicesearch.hotword.continuous = true;
+  voicesearch.hotword.interimResults = true;
+  voicesearch.hotword.onresult = function(event) {
     if (typeof(event.results) == "undefined") {
-      stopHotword();
+      voicesearch.stopHotword();
       return;
     }
     var final = "";
@@ -156,23 +164,26 @@ function startHotword() {
       }
     }
     var text = final.toLowerCase()+" "+approx.toLowerCase();
-    if (text.indexOf("okay google") >= 0 || text.indexOf("ok google") >= 0) {
-      showSpeechOverlay();
-      startListening();
-      stopHotword();
+    for (var i = 0; i < voicesearch.hotwords.length; i++) {
+      if (text.indexOf(voicesearch[i]) >= 0) {
+        voicesearch.showSpeechOverlay();
+        voicesearch.startListening();
+        voicesearch.stopHotword();
+        break;
+      }
     }
   };
-  hotword.onstart = function() {
+  voicesearch.hotword.onstart = function() {
     $("#fkbx-spch").css("display", "none");
     $("#fkbx-hspch, #fkbx-hht").css("display", "block");
   };
-  hotword.onend = stopHotword;
-  hotword.lang = loc.lang+"-"+loc.country;
-  hotword.start();
+  voicesearch.hotword.onend = voicesearch.stopHotword;
+  voicesearch.hotword.lang = loc.lang+"-"+loc.country;
+  voicesearch.hotword.start();
 };
 
-function stopHotword() {
-  hotword.stop();
+voicesearch.stopHotword = function() {
+  voicesearch.hotword.stop();
   $("#fkbx-spch").css("display", "block");
   $("#fkbx-hspch, #fkbx-hht").css("display", "none");
 };
