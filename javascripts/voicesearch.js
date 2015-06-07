@@ -28,23 +28,6 @@ voicesearch.hotword = new webkitSpeechRecognition();
 voicesearch.spoke = false;
 voicesearch.animFloatShow = null;
 
-$(document).ready(function() {
-  $("#fkbx-spch, #fkbx-hspch").click(function(event) {
-    voicesearch.showSpeechOverlay();
-    voicesearch.startListening();
-  });
-  $("#dark").click(function() {
-    voicesearch.hideSpeechOverlay();
-    voicesearch.stopListening(false);
-  });
-  $("#button-g").click(function() {
-    voicesearch.hideSpeechOverlay();
-    voicesearch.stopListening(true);
-  });
-  
-  voicesearch.startHotword();
-});
-
 voicesearch.showSpeechOverlay = function() {
   var floatOuter = $("#float-outer");
   floatOuter.css("pointer-events", "auto");
@@ -204,3 +187,20 @@ voicesearch.stopHotword = function() {
   $("#fkbx-spch").css("display", "block");
   $("#fkbx-hspch, #fkbx-hht").css("display", "none");
 };
+
+$(document).ready(function() {
+  $("#fkbx-spch, #fkbx-hspch").click(function(event) {
+    voicesearch.showSpeechOverlay();
+    voicesearch.startListening();
+  });
+  $("#dark").click(function() {
+    voicesearch.hideSpeechOverlay();
+    voicesearch.stopListening(false);
+  });
+  $("#button-g").click(function() {
+    voicesearch.hideSpeechOverlay();
+    voicesearch.stopListening(true);
+  });
+  
+  voicesearch.startHotword();
+});

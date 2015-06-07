@@ -34,6 +34,7 @@
     <script src="./javascripts/sources/wikipedia.js"></script>
     <script src="./javascripts/sources/maps.js"></script>
     <script src="./javascripts/sources/feed.js"></script>
+    <script src="./javascripts/sources/battery.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -83,7 +84,7 @@
                 <div id="fkbx-hspch" tabindex="0" aria-label="" style="display: none;" localize="search.sayog" localize-attr="aria-label"></div>
                 <div id="fkbx-hht" class="fkbx-hht-s" style="display: none;" localize="search.sayog"></div>
               </div>
-              <div class="progress" style="position: absolute; left: 0; bottom: 0;"><div class="indeterminate"></div></div>
+              <div id="progress" class="progress" style="position: absolute; left: 0; bottom: 0;"><div class="indeterminate"></div></div>
             </form>
           </div>
           <div id="cards">
@@ -147,8 +148,8 @@
               window[card.reloader].addCard(card, function() {}, function() {});
             }
           }
-          $(".progress").css("background-color", "rgba(255, 255, 255, 0)");
-          $(".progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+          $("#progress").css("background-color", "rgba(255, 255, 255, 0)");
+          $("#progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
           handleSearch();
         }, 2000);
         
@@ -198,8 +199,8 @@
       
       function handleQuery(query, i) {
         var success = function() {
-          $(".progress").css("background-color", "rgba(255, 255, 255, 0)");
-          $(".progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+          $("#progress").css("background-color", "rgba(255, 255, 255, 0)");
+          $("#progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
         };
         var single = false;
         if (typeof i == "string") {
@@ -213,11 +214,15 @@
           success();
           return;
         }
-        $(".progress").css("background-color", sources[i].colors.bg);
+        if (!sources[i].handleQuery) {
+          handleQuery(query, i+1);
+          return;
+        }
+        $("#progress").css("background-color", sources[i].colors.bg);
         if ((sources[i].colors.fg || "-dark") == "-dark") {
-          $(".progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).darken(20).toRgbString());
+          $("#progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).darken(20).toRgbString());
         } else {
-          $(".progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).lighten(20).toRgbString());
+          $("#progress .indeterminate").css("background-color", tinycolor(sources[i].colors.bg).lighten(20).toRgbString());
         }
         sources[i].handleQuery(query, success, single ? success : function() {
           handleQuery(query, i+1);
@@ -473,6 +478,9 @@
         var showButtons = function() {
           var right = $(window).width() - (buttonAdd.offset().left + buttonAdd.outerWidth());
           for (var i = 0; i < sources.length; i++) {
+            if (!sources[i].name) {
+              continue;
+            }
             var text = localized("sources."+sources[i].name);
             var item = $("<div class=\"button-round button-add-source\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
             menu.append(item);

@@ -30,6 +30,18 @@
     "in": " in "
   },
   
+  "battery": {
+    "title": {
+      "normal": "Battery status",
+      "charging": "Charging battery..."
+    },
+    "level": ["Currently at ", "%"],
+    "timeleft": {
+      "charging": ["Time left until charged: ", ""],
+      "discharging": ["Time left: ", ""]
+    }
+  },
+  
   "doodle": {
     "enable": "Google Doodle"
   },
