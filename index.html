@@ -72,7 +72,7 @@
             <img src="./images/icon-add-dark.png">
           </div>
           <div id="toolbar">
-            <form action="https://www.google.com/search" id="f" method="get">
+            <form action="https://www.google.com/search" onSubmit="return handleSearch();" id="f" method="get">
               <div id="hf"></div>
               <div class="" id="fkbx">
                 <!--div id="fkbx-text">Search</div-->
@@ -149,6 +149,7 @@
           }
           $(".progress").css("background-color", "rgba(255, 255, 255, 0)");
           $(".progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+          handleSearch();
         }, 2000);
         
         $(".card").each(function() {
@@ -221,7 +222,17 @@
         sources[i].handleQuery(query, success, single ? success : function() {
           handleQuery(query, i+1);
         });
-      }
+      };
+      
+      function handleSearch(query) {
+        if (query) {
+          localStorage.setItem("searched", query);
+          return true;
+        }
+        
+        handleQuery(localStorage.getItem("searched"));
+        localStorage.removeItem("searched");
+      };
       
       function pinCard(card) {
         var cards = [];

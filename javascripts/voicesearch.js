@@ -155,6 +155,7 @@ voicesearch.stopListening = function(parseQuery) {
   voicesearch.speech.stop();
   if (parseQuery && voicesearch.spoke) {
     var query = $("#speech").text()+" "+$("#speech-approx").text();
+    handleSearch(query);
     location.href = "https://www.google.com/search?gs_ivs=1&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " ");
   } else {
     voicesearch.startHotword();
