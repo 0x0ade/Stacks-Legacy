@@ -85,7 +85,7 @@ localize.addTranslation = function(lang, key, value) {
   var subkey = "";
   for (var i = 0; i < subkeys.length; i++) {
     subkey += subkeys[i];
-    eval("localize.dynamic."+lang+"."+subkey+" = {}");
+    eval("localize.dynamic."+lang+"."+subkey+" = localize.dynamic."+lang+"."+subkey+" || {}");
     subkey += ".";
   }
   eval("localize.dynamic."+lang+"."+key+" = value");
