@@ -6,6 +6,7 @@ window.localize.delay = 1000;
 window.localize.path = "./languages/";
 window.localize.detected = navigator.language || navigator.userLanguage;
 window.localize.fallbacklang = "en";
+window.localize.listeners = {get: [], geterror: [], add: []};
 
 function localized(key) {
   var val = null;
@@ -72,10 +73,11 @@ localize.getLanguage = function(lang, cb, fail) {
     if (cb) {
       cb(data);
     }
+    localize.callListeners(localize.listeners.get, lang, data);
   }).fail(fail || function(jqxhr, textStatus, error) {
     console.log("Failed loading locale: en");
     console.log(textStatus+", "+error);
-    alert("Failed loading the website texts. Please contact the site administrator.");
+    localize.callListeners(localize.listeners.geterror, lang, jqxhr, textStatus, error);
   });
 }
 
@@ -90,6 +92,21 @@ localize.addTranslation = function(lang, key, value) {
     subkey += ".";
   }
   eval("localize.dynamic."+lang+"."+key+" = value");
+  
+  localize.callListeners(localize.listeners.add, lang, key, value);
+}
+
+localize.callListeners = function() {
+  var listeners = arguments[0];
+  
+  var args = new Array(arguments.length - 1);
+  for (var i = 0; i < args.length; i++) {
+    args[i] = arguments[i+1];
+  }
+  
+  for (var i = 0; i < listeners.length; i++) {
+    listeners[i].apply(this, args);
+  }
 }
 
 if (localize.onstart) {

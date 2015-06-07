@@ -3,13 +3,24 @@ voicesearch.hotwords = [
   "ok google",
   "okay google",
   "ok papyrus",
-  "okay papyrus"
+  "okay papyrus",
+  "hi papyrus",
+  "hey papyrus"
   //custom hotwords go in here.
 ];
 voicesearch.speechTimeoutTime = 150;
 
+if (localize) {
+  console.log("voicesearch.js found localize.js; adding listeners...");
+  localize.listeners.get.push(function(lang, data) {
+    if (data.hotwords) {
+      voicesearch.hotwords = voicesearch.hotwords.concat(data.hotwords);
+    }
+  });
+}
+
 //TODO load hotwords from local storage
-//TODO load locale-specific hotwords
+
 
 voicesearch.speech = new webkitSpeechRecognition();
 voicesearch.speechTimeout = null;

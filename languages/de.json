@@ -34,5 +34,9 @@
     "enable": "Google Doodle"
   },
   
-  "sources": {}
+  "sources": {},
+  
+  "hotwords": [
+    "hallo papyrus"
+  ]
 }
