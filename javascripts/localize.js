@@ -2,6 +2,7 @@ window.localize = {};
 window.localize.langs = {};
 window.localize.dynamic = {};
 window.localize.onstart = true;
+window.localize.delay = 1000;
 window.localize.path = "./languages/";
 window.localize.detected = navigator.language || navigator.userLanguage;
 window.localize.fallbacklang = "en";
@@ -92,5 +93,5 @@ localize.addTranslation = function(lang, key, value) {
 }
 
 if (localize.onstart) {
-  localizeAll();
+  setTimeout(localizeAll, localize.delay);
 }

@@ -5,6 +5,14 @@ loc.temp = "F";
 loc.lat = 37.422;
 loc.lng = -122.084058;
 loc.city = "Mountain View";
+
+(function() {
+  var location = localStorage.getItem("location")
+  if (location) {
+    window.loc = JSON.parse(location);
+  }
+})();
+
 $(document).ready(function() {
   var fail = function() {
     $.getJSON("https://freegeoip.net/json/", function(response) {
@@ -16,8 +24,6 @@ $(document).ready(function() {
   } else {
     fail();
   }
-  
-  setTimeout(localizeAll, 1000);
 });
 
 function locationProcess(position) {
@@ -55,6 +61,8 @@ function locationMapsProcess(data) {
   if (loc.country !== "US") {
     loc.temp = "C";
   }
+  
+  localStorage.setItem("location", JSON.stringify(loc));
   
   return data;
 };

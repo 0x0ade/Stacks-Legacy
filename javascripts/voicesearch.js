@@ -3,8 +3,7 @@ window.voicesearch.hotwords = [
   "ok google",
   "okay google",
   "ok papyrus",
-  "okay papyrus",
-  "
+  "okay papyrus"
   //custom hotwords go in here.
 ];
 //TODO load hotwords from local storage
@@ -169,7 +168,7 @@ voicesearch.startHotword = function() {
     }
     var text = final.toLowerCase()+" "+approx.toLowerCase();
     for (var i = 0; i < voicesearch.hotwords.length; i++) {
-      if (text.indexOf(voicesearch[i]) >= 0) {
+      if (text.indexOf(voicesearch.hotwords[i]) >= 0) {
         voicesearch.showSpeechOverlay();
         voicesearch.startListening();
         voicesearch.stopHotword();
