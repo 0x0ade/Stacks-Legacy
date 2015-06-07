@@ -11,22 +11,22 @@ window.localize.listeners = {get: [], geterror: [], add: []};
 function localized(key) {
   var val = null;
   try {
-    if ((val = eval("localize.lang."+key)) != null) {
-      return val;
-    }
-  } catch (e) {};
-  try {
-    if ((val = eval("localize.fallback."+key)) != null) {
-      return val;
-    }
-  } catch (e) {};
-  try {
     if ((val = eval("localize.dynamic."+localize.detected+"."+key)) != null) {
       return val;
     }
   } catch (e) {};
   try {
     if ((val = eval("localize.dynamic."+localize.fallbacklang+"."+key)) != null) {
+      return val;
+    }
+  } catch (e) {};
+  try {
+    if ((val = eval("localize.lang."+key)) != null) {
+      return val;
+    }
+  } catch (e) {};
+  try {
+    if ((val = eval("localize.fallback."+key)) != null) {
       return val;
     }
   } catch (e) {};
