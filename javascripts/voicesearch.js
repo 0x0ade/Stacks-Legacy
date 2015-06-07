@@ -1,11 +1,13 @@
 window.voicesearch = {};
-window.voicesearch.hotwords = [
+voicesearch.hotwords = [
   "ok google",
   "okay google",
   "ok papyrus",
   "okay papyrus"
   //custom hotwords go in here.
 ];
+voicesearch.speechTimeoutTime = 150;
+
 //TODO load hotwords from local storage
 //TODO load locale-specific hotwords
 
@@ -98,7 +100,7 @@ voicesearch.startListening = function() {
     var approx = "";
     var isFinal = true;
     for (var i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.3) {
+      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.2) {
         final += event.results[i][0].transcript;
       } else {
         approx += event.results[i][0].transcript;
@@ -110,7 +112,7 @@ voicesearch.startListening = function() {
       if (voicesearch.speechTimeout) {
         clearTimeout(voicesearch.speechTimeout);
       }
-      voicesearch.speechTimeout = setTimeout(function() {voicesearch.stopListening(true)}, 2000);
+      voicesearch.speechTimeout = setTimeout(function() {voicesearch.stopListening(true)}, voicesearch.speechTimeoutTime);
     } else if (!isFinal && voicesearch.speechTimeout) {
       clearTimeout(voicesearch.speechTimeout);
       voicesearch.speechTimeout = null;
