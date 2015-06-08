@@ -30,7 +30,7 @@ battery.addCard = function(data, success, fail) {
     timeleft_s = timeleft.getHours() + ":" + timeleft_s;
   };
   
-  var card = $("<div class=\"card card-battery\" id=\"battery\"><div class=\"progress\" style=\"position: absolute; left: 0; top: 0; background-color: "+colorbg.toRgbString()+";\"><div class=\""+(data.charging ? "in" : "")+"determinate\" style=\"background-color: "+colorfg.toRgbString()+";\"></div></div><h2>"+localized("battery.title."+(data.charging ? "charging" : "normal"))+"</h2><p><span>"+localized("battery.level[0]")+Math.floor(data.level * 100)+localized("battery.level[1]")+(data.chargingTime != Infinity && data.dischargingTime != Infinity ? "<br>"+localized("battery.timeleft."+(data.charging ? "" : "dis")+"charging[0]")+timeleft_s+localized("battery.timeleft."+(data.charging ? "" : "dis")+"charging[1]") : "")+"</span></p></div>");
+  var card = $("<div class=\"card card-battery\" id=\"battery\"><div class=\"progress\" style=\"position: absolute; left: 0; top: 0; background-color: "+colorbg.toRgbString()+";\"><div class=\""+(data.charging ? "in" : "")+"determinate\" style=\"background-color: "+colorfg.toRgbString()+";"+(data.charging ? "" : " width: "+Math.floor(data.level * 100)+"%; ")+"\"></div></div><h2>"+localized("battery.title."+(data.charging ? "charging" : "normal"))+"</h2><p><span>"+localized("battery.level[0]")+Math.floor(data.level * 100)+localized("battery.level[1]")+(data.chargingTime != Infinity && data.dischargingTime != Infinity ? "<br>"+localized("battery.timeleft."+(data.charging ? "" : "dis")+"charging[0]")+timeleft_s+localized("battery.timeleft."+(data.charging ? "" : "dis")+"charging[1]") : "")+"</span></p></div>");
   appendCard(card);
   animateCard(card);
   if (!data.reloader) {
