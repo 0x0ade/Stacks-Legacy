@@ -1,4 +1,5 @@
 window.wikipedia = {};
+wikipedia.colorThief = new ColorThief();
 
 wikipedia.handleQuery = function(query, success, fail) {
   if (!query) {
@@ -49,6 +50,41 @@ wikipedia.addCard = function(data, success, fail) {
   var card;
   if (data.image) {
     card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span style=\"position: absolute; bottom: 0; color: white; text-shadow: 0 0 4px rgba(255, 255, 255, 0.725); margin: -128px 0 0 -12px; padding: 128px 12px 8px 12px; background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.625) 30%, rgba(0, 0, 0, 0) 100%)\">"+data.content+"</span></p></div>");
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var blob = new Blob([new Uint8Array(xhr.response)], {type: "image/" + data.image.substr(data.image.length - 3)});
+            var img = $("<img>");
+            img[0].src = (window.URL || window.webkitURL).createObjectURL(blob);
+            img.on("load", function() {
+              var bg = tinycolor({h: 0, s: 0, v: 0});
+              var bg_hsv = bg.toHsv();
+              var colors = wikipedia.colorThief.getPalette(this, 16);
+              for (var i = 0; i < colors.length; i++) {
+                var color = tinycolor({r: colors[i][0], g: colors[i][1], b: colors[i][2]});
+                var color_hsv = color.toHsv();
+                if ((color_hsv.s + color_hsv.v) >= (bg_hsv.s + bg_hsv.v)) {
+                  bg = color;
+                  bg_hsv = color_hsv;
+                }
+              }
+              
+              card.css("background-color", bg.toRgbString());
+              if (bg.toHsv().v <= 0.6) {
+                card.find("h2 a").css("color", "white");
+              }
+              
+              $(this).remove();
+            });
+            $("#hidden").append(img);
+          }
+      };
+      xhr.open("GET", "https://cors-anywhere.herokuapp.com/"+data.image.replace(new RegExp("https://", "g"), ""), true);
+      xhr.responseType = "arraybuffer";
+      xhr.setRequestHeader("x-requested-with", "gnowwebmockup");
+      xhr.send();
+      
   } else {
     card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span>"+data.content+"</span></p></div>");
   }
