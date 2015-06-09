@@ -49,7 +49,8 @@ wikipedia.addCard = function(data, success, fail) {
   }
   var card;
   if (data.image) {
-    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span style=\"position: absolute; bottom: 0; color: white; text-shadow: 0 0 4px rgba(255, 255, 255, 0.725); margin: -128px 0 0 -12px; padding: 128px 12px 8px 12px; background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.625) 30%, rgba(0, 0, 0, 0) 100%)\">"+data.content+"</span></p></div>");
+    card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span style=\"max-height: 400px; display: block; overflow: hidden; margin: 0 -12px -8px -12px;\"><img src=\""+data.image+"\" style=\"display: inline-block; width: 650px;\"></span><span class=\"card-wikipedia-text\" style=\"position: absolute; bottom: 0; color: white; text-shadow: 0 0 4px rgba(255, 255, 255, 0.725); margin: -128px 0 0 -12px; padding: 128px 12px 8px 12px;\">"+data.content+"</span></p></div>");
+    var card_text = card.find(".card-wikipedia-text");
     
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -69,12 +70,29 @@ wikipedia.addCard = function(data, success, fail) {
                   bg_hsv = color_hsv;
                 }
               }
+              var bg_rgb = bg.toRgb();
               
               card.css("background-color", bg.toRgbString());
               
-              var bg_rgb = bg.toRgb();
-              if (((bg_rgb.r * 299) + (bg_rgb.g * 587) + (bg_rgb.b * 114)) / 1000 <= 127) {
+              var card_bright = ((bg_rgb.r * 299) + (bg_rgb.g * 587) + (bg_rgb.b * 114)) / 1000 <= 127;
+              
+              if (card_bright) {
                 card.find("h2 a").css("color", "white");
+              }
+              
+              if (card_text.outerHeight(true) >= card.outerHeight(true)) {
+                card_text.css("background", "");
+                card_text.css("position", "relative");
+                if (card_bright) {
+                  card_text.css("color", "white");
+                }
+                card_text.css("text-shadow", "");
+              } else {
+                var scrim_start = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.75}).darken(35).desaturate(20).toRgbString();
+                var scrim_mid = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.375}).darken(35).desaturate(20).toRgbString();
+                var scrim_end = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0}).darken(35).desaturate(20).toRgbString();
+                
+                card_text.css("background", "linear-gradient(to top, "+scrim_start+" 0%, "+scrim_mid+" 30%, "+scrim_end+" 100%)");
               }
               
               $(this).remove();
