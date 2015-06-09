@@ -88,9 +88,9 @@ wikipedia.addCard = function(data, success, fail) {
                 }
                 card_text.css("text-shadow", "");
               } else {
-                var scrim_start = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.75}).darken(35).desaturate(20).toRgbString();
-                var scrim_mid = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.375}).darken(35).desaturate(20).toRgbString();
-                var scrim_end = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0}).darken(35).desaturate(20).toRgbString();
+                var scrim_start = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.88}).darken(45).desaturate(10).toRgbString();
+                var scrim_mid = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0.66}).darken(45).desaturate(10).toRgbString();
+                var scrim_end = new tinycolor({r: bg_rgb.r, g: bg_rgb.g, b: bg_rgb.b, a: 0}).darken(45).desaturate(10).toRgbString();
                 
                 card_text.css("background", "linear-gradient(to top, "+scrim_start+" 0%, "+scrim_mid+" 30%, "+scrim_end+" 100%)");
               }
