@@ -71,7 +71,7 @@ wikipedia.addCard = function(data, success, fail) {
               }
               
               card.css("background-color", bg.toRgbString());
-              if (bg.toHsv().v <= 0.6) {
+              if (bg.toHsv().v <= 0.77) {
                 card.find("h2 a").css("color", "white");
               }
               
