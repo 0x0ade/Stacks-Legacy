@@ -64,14 +64,16 @@ wikipedia.addCard = function(data, success, fail) {
               for (var i = 0; i < colors.length; i++) {
                 var color = tinycolor({r: colors[i][0], g: colors[i][1], b: colors[i][2]});
                 var color_hsv = color.toHsv();
-                if ((color_hsv.s + color_hsv.v) >= (bg_hsv.s + bg_hsv.v)) {
+                if ((color_hsv.s * 1.3 + color_hsv.v - (i / colors.length) * 0.3) >= (bg_hsv.s * 1.3 + bg_hsv.v)) {
                   bg = color;
                   bg_hsv = color_hsv;
                 }
               }
               
               card.css("background-color", bg.toRgbString());
-              if (bg.toHsv().v <= 0.77) {
+              
+              var bg_rgb = bg.toRgb();
+              if (((bg_rgb.r * 299) + (bg_rgb.g * 587) + (bg_rgb.b * 114)) / 1000 <= 127) {
                 card.find("h2 a").css("color", "white");
               }
               
