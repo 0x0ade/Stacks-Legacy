@@ -21,12 +21,98 @@ if (localize) {
 
 //TODO load hotwords from local storage
 
+voicesearch.recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition || window.oSpeechRecognition)();
+voicesearch.ignore = "";
+voicesearch.ignoreRegexp = null;
 
-voicesearch.speech = new webkitSpeechRecognition();
+voicesearch.speech = {
+  name: "speech",
+  continuous: true,
+  interimResults: true,
+  onresult: function(event) {
+    if (typeof(event.results) == "undefined") {
+      voicesearch.stopListening(true);
+      return;
+    }
+    var final = "";
+    var approx = "";
+    var isFinal = true;
+    for (var i = event.resultIndex; i < event.results.length; i++) {
+      if ((event.results[i].isFinal || event.results[i][0].confidence >= 0.2) && (event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "").length > 0)) {
+        final += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+      } else {
+        approx += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+        isFinal = false;
+      }
+    }
+    
+    if (isFinal && !voicesearch.speechTimeout) {
+      if (voicesearch.speechTimeout) {
+        clearTimeout(voicesearch.speechTimeout);
+      }
+      voicesearch.speechTimeout = setTimeout(function() {voicesearch.ignore = final; voicesearch.ignoreRegexp = new RegExp("("+voicesearch.ignore+")", "i"); voicesearch.stopListening(true)}, voicesearch.speechTimeoutTime);
+    } else if (!isFinal && voicesearch.speechTimeout) {
+      clearTimeout(voicesearch.speechTimeout);
+      voicesearch.speechTimeout = null;
+    }
+    $("#speech").text(final);
+    $("#speech-approx").text(approx);
+    voicesearch.spoke = true;
+  },
+  onerror: function(event) { 
+    $("#speech").text(localized("search.voice.error"));
+    $("#speech-approx").text("");
+    setTimeout(voicesearch.hideSpeechOverlay, 2000);
+    voicesearch.stopListening(false);
+  },
+  onstart: function(event) {
+    $("#speech").text(localized("search.voice.now"));
+    $("#speech-approx").text(localized("search.voice.example"));
+  }
+};
+voicesearch.hotword = {
+  name: "hotword",
+  continuous: true,
+  interimResults: true,
+  onresult: function(event) {
+    if (typeof(event.results) == "undefined") {
+      voicesearch.stopHotword();
+      return;
+    }
+    var final = "";
+    var approx = "";
+    for (var i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.2) {
+        final += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+      } else {
+        approx += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+      }
+    }
+    var text = final.toLowerCase()+" "+approx.toLowerCase();
+    for (var i = 0; i < voicesearch.hotwords.length; i++) {
+      if (text.indexOf(voicesearch.hotwords[i]) >= 0) {
+        console.log("voicesearch: found hotword " + voicesearch.hotwords[i]);
+        voicesearch.ignore = voicesearch.hotwords[i];
+        voicesearch.ignoreRegexp = new RegExp("("+voicesearch.ignore+")", "i");
+        voicesearch.showSpeechOverlay();
+        voicesearch.stopHotword(true);
+        voicesearch.startListening(true);
+        break;
+      }
+    }
+  },
+  onstart: function() {
+    $("#fkbx-spch").css("display", "none");
+    $("#fkbx-hspch, #fkbx-hht").css("display", "block");
+  },
+  onend: voicesearch.stopHotword
+};
+
 voicesearch.speechTimeout = null;
-voicesearch.hotword = new webkitSpeechRecognition();
 voicesearch.spoke = false;
 voicesearch.animFloatShow = null;
+
+voicesearch.context = voicesearch.hotword;
 
 voicesearch.showSpeechOverlay = function() {
   var floatOuter = $("#float-outer");
@@ -78,55 +164,12 @@ voicesearch.hideSpeechOverlay = function() {
   });
 };
 
-voicesearch.startListening = function() {
+voicesearch.startListening = function(keepSession) {
   $("#speech").text(localized("search.voice.allow"));
   $("#speech-approx").text("");
   voicesearch.spoke = false;
   
-  voicesearch.speech.continuous = true;
-  voicesearch.speech.interimResults = true;
-  voicesearch.speech.onresult = function(event) {
-    if (typeof(event.results) == "undefined") {
-      voicesearch.stopListening(true);
-      return;
-    }
-    var final = "";
-    var approx = "";
-    var isFinal = true;
-    for (var i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.2) {
-        final += event.results[i][0].transcript;
-      } else {
-        approx += event.results[i][0].transcript;
-        isFinal = false;
-      }
-    }
-    
-    if (isFinal && !voicesearch.speechTimeout) {
-      if (voicesearch.speechTimeout) {
-        clearTimeout(voicesearch.speechTimeout);
-      }
-      voicesearch.speechTimeout = setTimeout(function() {voicesearch.stopListening(true)}, voicesearch.speechTimeoutTime);
-    } else if (!isFinal && voicesearch.speechTimeout) {
-      clearTimeout(voicesearch.speechTimeout);
-      voicesearch.speechTimeout = null;
-    }
-    $("#speech").text(final);
-    $("#speech-approx").text(approx);
-    voicesearch.spoke = true;
-  };
-  voicesearch.speech.onerror = function(event) { 
-    $("#speech").text(localized("search.voice.error"));
-    $("#speech-approx").text("");
-    setTimeout(voicesearch.hideSpeechOverlay, 2000);
-    voicesearch.stopListening(false);
-  };
-  voicesearch.speech.onstart = function(event) {
-    $("#speech").text(localized("search.voice.now"));
-    $("#speech-approx").text(localized("search.voice.example"));
-  };
-  voicesearch.speech.lang = loc.lang+"-"+loc.country;
-  voicesearch.speech.start();
+  voicesearch.start(voicesearch.speech, keepSession);
 }
 
 voicesearch.stopListening = function(parseQuery) {
@@ -134,8 +177,7 @@ voicesearch.stopListening = function(parseQuery) {
     clearTimeout(voicesearch.speechTimeout);
     voicesearch.speechTimeout = null;
   }
-  voicesearch.speech.onresult = null;
-  voicesearch.speech.stop();
+  voicesearch.stop(true);
   if (parseQuery && voicesearch.spoke) {
     var query = $("#speech").text()+" "+$("#speech-approx").text();
     handleSearch(query);
@@ -147,45 +189,49 @@ voicesearch.stopListening = function(parseQuery) {
 }
 
 voicesearch.startHotword = function() {
-  voicesearch.hotword.continuous = true;
-  voicesearch.hotword.interimResults = true;
-  voicesearch.hotword.onresult = function(event) {
-    if (typeof(event.results) == "undefined") {
-      voicesearch.stopHotword();
-      return;
-    }
-    var final = "";
-    var approx = "";
-    for (var i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.3) {
-        final += event.results[i][0].transcript;
-      } else {
-        approx += event.results[i][0].transcript;
-      }
-    }
-    var text = final.toLowerCase()+" "+approx.toLowerCase();
-    for (var i = 0; i < voicesearch.hotwords.length; i++) {
-      if (text.indexOf(voicesearch.hotwords[i]) >= 0) {
-        voicesearch.showSpeechOverlay();
-        voicesearch.startListening();
-        voicesearch.stopHotword();
-        break;
-      }
-    }
-  };
-  voicesearch.hotword.onstart = function() {
-    $("#fkbx-spch").css("display", "none");
-    $("#fkbx-hspch, #fkbx-hht").css("display", "block");
-  };
-  voicesearch.hotword.onend = voicesearch.stopHotword;
-  voicesearch.hotword.lang = loc.lang+"-"+loc.country;
-  voicesearch.hotword.start();
+  voicesearch.start(voicesearch.hotword);
 };
 
-voicesearch.stopHotword = function() {
-  voicesearch.hotword.stop();
+voicesearch.stopHotword = function(keepSession) {
+  voicesearch.stop(false, keepSession);
   $("#fkbx-spch").css("display", "block");
   $("#fkbx-hspch, #fkbx-hht").css("display", "none");
+};
+
+voicesearch.start = function(context, keepSession) {
+  console.log("voicesearch: start with new context " + context.name + " while " + (keepSession ? "" : "not") + " keeping the session");
+  
+  for (var key in (voicesearch.context || {})) {
+    voicesearch.recognition[key] = null;
+  }
+  if (context) {
+    voicesearch.context = context;
+  }
+  for (var key in (voicesearch.context || {})) {
+    voicesearch.recognition[key] = voicesearch.context[key];
+  }
+  
+  voicesearch.recognition.lang = loc.lang+"-"+loc.country;
+  
+  if (!keepSession) {
+    voicesearch.recognition.start();
+  } else if (voicesearch.recognition.onstart) {
+    voicesearch.recognition.onstart();
+  }
+};
+
+voicesearch.stop = function(force, keepSession) {
+  console.log("voicesearch: stop on context " + voicesearch.context.name + ", " + (force ? "enforcing" : "") + " it while " + (keepSession ? "" : "not") + " keeping the session");
+  
+  if (force) {
+    voicesearch.recognition.onend = null;
+  }
+  
+  if (!keepSession) {
+    voicesearch.recognition.stop();
+  } else if (voicesearch.recognition.onend) {
+    voicesearch.recognition.onend();
+  }
 };
 
 $(document).ready(function() {
