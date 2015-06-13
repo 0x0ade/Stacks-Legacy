@@ -25,7 +25,7 @@
 }
 .doodle-shadow {
   opacity: 0.1;
-  background-image: url("../images/logo11w-dark.png");
+  background-image: url("../../images/logo11w-dark.png");
   top: 159px;
   z-index: -98;
 }
