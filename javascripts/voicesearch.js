@@ -38,12 +38,49 @@ voicesearch.speech = {
     var approx = "";
     var isFinal = true;
     for (var i = event.resultIndex; i < event.results.length; i++) {
-      if ((event.results[i].isFinal || event.results[i][0].confidence >= 0.2) && (event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "").length > 0)) {
-        final += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+      var transcript = event.results[i][0].transcript;
+      if (transcript.toLowerCase().indexOf(voicesearch.ignore) >= 0) {
+        transcript = transcript.substr(transcript.toLowerCase().indexOf(voicesearch.ignore) + voicesearch.ignore.length);
+      } else if (i > event.resultIndex) {
+        var transcriptTmp = transcript + event.results[i-1][0].transcript;
+        if (transcriptTmp.toLowerCase().indexOf(voicesearch.ignore) >= 0) {
+          transcriptTmp = transcriptTmp.substr(transcriptTmp.toLowerCase().indexOf(voicesearch.ignore) + voicesearch.ignore.length);
+        }
+        if (transcriptTmp.length <= 1) {
+          isFinal = false;
+          continue;
+        }
+      } else if (i < event.results.length-1) {
+        var transcriptTmp = transcript + event.results[i+1][0].transcript;
+        if (transcriptTmp.toLowerCase().indexOf(voicesearch.ignore) >= 0) {
+          transcriptTmp = transcriptTmp.substr(transcriptTmp.toLowerCase().indexOf(voicesearch.ignore) + voicesearch.ignore.length);
+        }
+        if (transcriptTmp.length <= 1) {
+          isFinal = false;
+          continue;
+        }
+      }
+      if (transcript.length <= 1) {
+        isFinal = false;
+        continue;
+      }
+      if (event.results[i].isFinal || event.results[i][0].confidence >= 0.2) {
+        final += transcript;
       } else {
-        approx += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+        approx += transcript;
         isFinal = false;
       }
+    }
+    
+    voicesearch.spoke = true;
+    
+    if (final.length > 0 || approx.length > 0) {
+      $("#speech").text(final);
+      $("#speech-approx").text(approx);
+    } else {
+      $("#speech").text(localized("search.voice.now"));
+      $("#speech-approx").text(localized("search.voice.example"));
+      isFinal = false;
     }
     
     if (isFinal && !voicesearch.speechTimeout) {
@@ -55,19 +92,21 @@ voicesearch.speech = {
       clearTimeout(voicesearch.speechTimeout);
       voicesearch.speechTimeout = null;
     }
-    $("#speech").text(final);
-    $("#speech-approx").text(approx);
-    voicesearch.spoke = true;
   },
   onerror: function(event) { 
     $("#speech").text(localized("search.voice.error"));
     $("#speech-approx").text("");
-    setTimeout(voicesearch.hideSpeechOverlay, 2000);
+    setTimeout(voicesearch.hideSpeechOverlay, 5000);
     voicesearch.stopListening(false);
+    voicesearch.startHotword(true);
   },
   onstart: function(event) {
     $("#speech").text(localized("search.voice.now"));
     $("#speech-approx").text(localized("search.voice.example"));
+  },
+  onend: function(event) { 
+    voicesearch.hideSpeechOverlay();
+    voicesearch.stopListening(false);
   }
 };
 voicesearch.hotword = {
@@ -82,10 +121,14 @@ voicesearch.hotword = {
     var final = "";
     var approx = "";
     for (var i = event.resultIndex; i < event.results.length; i++) {
+      var transcript = event.results[i][0].transcript;
+      if (transcript.toLowerCase().indexOf(voicesearch.ignore) >= 0) {
+        transcript = transcript.substr(transcript.toLowerCase().indexOf(voicesearch.ignore) + voicesearch.ignore.length);
+      }
       if (event.results[i].isFinal || event.results[i][0].confidence >= 0.2) {
-        final += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+        final += transcript;
       } else {
-        approx += event.results[i][0].transcript.replace(voicesearch.ignoreRegexp, "");
+        approx += transcript;
       }
     }
     var text = final.toLowerCase()+" "+approx.toLowerCase();
@@ -95,17 +138,14 @@ voicesearch.hotword = {
         voicesearch.ignore = voicesearch.hotwords[i];
         voicesearch.ignoreRegexp = new RegExp(voicesearch.ignore, "i");
         voicesearch.showSpeechOverlay();
-        voicesearch.stopHotword(true);
+        voicesearch.stop(false, true);
         voicesearch.startListening(true);
         break;
       }
     }
   },
-  onstart: function() {
-    $("#fkbx-spch").css("display", "none");
-    $("#fkbx-hspch, #fkbx-hht").css("display", "block");
-  },
-  onend: function() {voicesearch.stopHotword();}
+  onstart: function(event) {voicesearch.showHotwordHint();},
+  onend: function(event) {voicesearch.hideHotwordHint();}
 };
 
 voicesearch.speechTimeout = null;
@@ -164,6 +204,16 @@ voicesearch.hideSpeechOverlay = function() {
   });
 };
 
+voicesearch.showHotwordHint = function() {
+  $("#fkbx-spch").css("display", "none");
+  $("#fkbx-hspch, #fkbx-hht").css("display", "block");
+}
+
+voicesearch.hideHotwordHint = function() {
+  $("#fkbx-spch").css("display", "block");
+  $("#fkbx-hspch, #fkbx-hht").css("display", "none");
+}
+
 voicesearch.startListening = function(keepSession) {
   $("#speech").text(localized("search.voice.allow"));
   $("#speech-approx").text("");
@@ -183,23 +233,21 @@ voicesearch.stopListening = function(parseQuery) {
     handleSearch(query);
     location.href = "https://www.google.com/search?gs_ivs=1&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " ");
   } else {
-    voicesearch.startHotword();
+    voicesearch.startHotword(true);
   }
   voicesearch.spoke = false;
 }
 
-voicesearch.startHotword = function() {
-  voicesearch.start(voicesearch.hotword);
+voicesearch.startHotword = function(keepSession) {
+  voicesearch.start(voicesearch.hotword, keepSession);
 };
 
 voicesearch.stopHotword = function(keepSession) {
   voicesearch.stop(false, keepSession);
-  $("#fkbx-spch").css("display", "block");
-  $("#fkbx-hspch, #fkbx-hht").css("display", "none");
 };
 
 voicesearch.start = function(context, keepSession) {
-  console.log("voicesearch: start with new context " + context.name + " while " + (keepSession ? "" : "not") + " keeping the session");
+  console.log("voicesearch: start with new context " + (context || {name: "undefined"}).name + " while" + (keepSession ? "" : " not") + " keeping the session");
   
   for (var key in (voicesearch.context || {})) {
     voicesearch.recognition[key] = null;
@@ -215,13 +263,13 @@ voicesearch.start = function(context, keepSession) {
   
   if (!keepSession) {
     voicesearch.recognition.start();
-  } else if (voicesearch.recognition.onstart) {
+  } else if (voicesearch.recognition.onstart && voicesearch.context) {
     voicesearch.recognition.onstart();
   }
 };
 
 voicesearch.stop = function(force, keepSession) {
-  console.log("voicesearch: stop on context " + voicesearch.context.name + ", " + (force ? "enforcing" : "") + " it while " + (keepSession ? "" : "not") + " keeping the session");
+  console.log("voicesearch: stop on context " + (voicesearch.context || {name: "undefined"}).name + (force ? ", enforcing it" : "") + " while" + (keepSession ? "" : " not") + " keeping the session");
   
   if (force) {
     voicesearch.recognition.onend = null;
@@ -229,7 +277,7 @@ voicesearch.stop = function(force, keepSession) {
   
   if (!keepSession) {
     voicesearch.recognition.stop();
-  } else if (voicesearch.recognition.onend) {
+  } else if (voicesearch.recognition.onend && voicesearch.context) {
     voicesearch.recognition.onend();
   }
 };
@@ -237,7 +285,7 @@ voicesearch.stop = function(force, keepSession) {
 $(document).ready(function() {
   $("#fkbx-spch, #fkbx-hspch").click(function(event) {
     voicesearch.showSpeechOverlay();
-    voicesearch.startListening();
+    voicesearch.startListening(true);
   });
   $("#dark").click(function() {
     voicesearch.hideSpeechOverlay();
