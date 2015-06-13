@@ -25,8 +25,6 @@
     <script src="./javascripts/location.js"></script>
     <script src="./javascripts/localize.js"></script>
     <script src="./javascripts/scrolltoolbar.js" async defer></script>
-    <script src="./javascripts/header.js" async defer></script>
-    <script src="./javascripts/doodle.js" async defer></script>
     <script src="./javascripts/voicesearch.js" async defer></script>
     <script src="./javascripts/tinycolor.js"></script>
     <script src="./javascripts/toggles.js"></script>
@@ -36,6 +34,8 @@
     <script src="./javascripts/sources/maps.js"></script>
     <script src="./javascripts/sources/feed.js"></script>
     <script src="./javascripts/sources/battery.js"></script>
+    <script src="./javascripts/themes/gnow.js"></script>
+    <script src="./javascripts/themes/papyros.js"></script>
     <script src="./javascripts/themer.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -53,20 +53,6 @@
   </head>
   <body unresolved>
     <div class="header">
-    </div>
-    <div id="chromebar">
-      <a href="https://plus.google.com/" id="cbar_me" localize="cbar.me">+Me</a>
-      <a href="https://mail.google.com/mail/" id="cbar_gmail" localize="cbar.gmail">Gmail</a>
-      <a href="https://images.google.com/" id="cbar_images" localize="cbar.images">Images</a>
-      <a href="https://www.google.com/" id="cbar_google">google.com</a>
-    </div>
-    <form action="#" id="checkbox-doodle-form"  style="display: none;"><p>
-      <input type="checkbox" id="checkbox-doodle" checked="checked" onclick="setDoodleEnabled(this.checked)"/>
-      <label for="checkbox-doodle" localize="doodle.enable"></label>
-    </p></form>
-    <div class="doodle-shadow">
-    </div>
-    <div class="doodle">
     </div>
     <div class="main">
       <div class="content">
@@ -97,7 +83,7 @@
     <div class="footer-wrapper">
       <div class="footer">
         <div class="button-round" label="" id="button-clear" localize="card.clear" localize-attr="label"><img src="./images/icon-clear-dark.png"></div>
-        <div class="footer-text">Mockup by Maik Macho; Google, Google Now and Google APIs by Google.</div>
+        <div class="footer-text">Stacks by Maik Macho and <a href="https://github.com/AngelDE98/gnow-web/graphs/contributors">collaborators on GitHub</a>; Google, Google Now and Google APIs by Google.</div>
       </div>
     </div>
     <div id="float-outer">
