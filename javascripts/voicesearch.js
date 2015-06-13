@@ -50,7 +50,7 @@ voicesearch.speech = {
       if (voicesearch.speechTimeout) {
         clearTimeout(voicesearch.speechTimeout);
       }
-      voicesearch.speechTimeout = setTimeout(function() {voicesearch.ignore = final; voicesearch.ignoreRegexp = new RegExp("("+voicesearch.ignore+")", "i"); voicesearch.stopListening(true)}, voicesearch.speechTimeoutTime);
+      voicesearch.speechTimeout = setTimeout(function() {voicesearch.ignore = final; voicesearch.ignoreRegexp = new RegExp(voicesearch.ignore, "i"); voicesearch.stopListening(true)}, voicesearch.speechTimeoutTime);
     } else if (!isFinal && voicesearch.speechTimeout) {
       clearTimeout(voicesearch.speechTimeout);
       voicesearch.speechTimeout = null;
@@ -93,7 +93,7 @@ voicesearch.hotword = {
       if (text.indexOf(voicesearch.hotwords[i]) >= 0) {
         console.log("voicesearch: found hotword " + voicesearch.hotwords[i]);
         voicesearch.ignore = voicesearch.hotwords[i];
-        voicesearch.ignoreRegexp = new RegExp("("+voicesearch.ignore+")", "i");
+        voicesearch.ignoreRegexp = new RegExp(voicesearch.ignore, "i");
         voicesearch.showSpeechOverlay();
         voicesearch.stopHotword(true);
         voicesearch.startListening(true);
@@ -105,7 +105,7 @@ voicesearch.hotword = {
     $("#fkbx-spch").css("display", "none");
     $("#fkbx-hspch, #fkbx-hht").css("display", "block");
   },
-  onend: voicesearch.stopHotword
+  onend: function() {voicesearch.stopHotword();}
 };
 
 voicesearch.speechTimeout = null;
@@ -177,7 +177,7 @@ voicesearch.stopListening = function(parseQuery) {
     clearTimeout(voicesearch.speechTimeout);
     voicesearch.speechTimeout = null;
   }
-  voicesearch.stop(true);
+  voicesearch.stop(true, true);
   if (parseQuery && voicesearch.spoke) {
     var query = $("#speech").text()+" "+$("#speech-approx").text();
     handleSearch(query);
