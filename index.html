@@ -16,27 +16,34 @@
     <link rel="stylesheet" href="./stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="./stylesheets/jquery-ui.theme.css">
     
+    <!-- JQuery, plugins and third-party APIs -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="./javascripts/velocity.min.js"></script>
     <script src="./javascripts/color-thief.js"></script>
-    <script src="./javascripts/location.js"></script>
-    <script src="./javascripts/localize.js"></script>
+    
+    <!-- Stacks javascript files -->
+    <script src="./javascripts/location.js" async defer></script>
+    <script src="./javascripts/localize.js"></script> <!-- can't be loaded asynchronously as the sources require it to add their own translations for the labels -->
     <script src="./javascripts/scrolltoolbar.js" async defer></script>
     <script src="./javascripts/voicesearch.js" async defer></script>
-    <script src="./javascripts/tinycolor.js"></script>
-    <script src="./javascripts/toggles.js"></script>
-    <script src="./javascripts/labels.js"></script>
+    <script src="./javascripts/tinycolor.js" async defer></script>
+    <script src="./javascripts/labels.js" async defer></script>
+    
+    <!-- Stacks sources -->
     <script src="./javascripts/sources/gcard.js"></script>
     <script src="./javascripts/sources/wikipedia.js"></script>
     <script src="./javascripts/sources/maps.js"></script>
     <script src="./javascripts/sources/feed.js"></script>
     <script src="./javascripts/sources/battery.js"></script>
-    <script src="./javascripts/themes/gnow.js"></script>
-    <script src="./javascripts/themes/papyros.js"></script>
-    <script src="./javascripts/themer.js"></script>
+    
+    <!-- Stacks themes -->
+    <script src="./javascripts/themes/gnow.js" async defer></script>
+    <script src="./javascripts/themes/papyros.js" async defer></script>
+    
+    <script src="./javascripts/themer.js" async defer></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
