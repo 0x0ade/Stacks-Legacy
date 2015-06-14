@@ -921,14 +921,16 @@ dt {
   transform: translateY(-2px);
   box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 4px 8px rgba(0, 0, 0, 0.175), 0px 12px 12px rgba(0, 0, 0, 0.1275), 0px 0px 32px rgba(0, 0, 0, 0.15);
 }
-.button-round img {
+.button-round img, .button-flat img {
   transition-duration: 0.15s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  margin: 16px 0 0 16px;
   width: 24px;
   height: 24px;
   opacity: 0.55;
+}
+.button-round img {
+  margin: 16px 0 0 16px;
 }
 
 #button-add {
@@ -972,6 +974,13 @@ dt {
   height: 40px;
   opacity: 1;
 }
+#button-settings {
+  position: absolute;
+  bottom: 64px;
+  right: 24px;
+  margin: 0 28px 0 -28px;
+  z-index: 81;
+}
 .button-add-source {
   transition-duration: 0.1s;
   transform: scale(0.1);
@@ -994,7 +1003,7 @@ dt {
     100% {border-radius: 0;}
 }
 
-#dark {
+.dark {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1058,30 +1067,25 @@ dt {
   left: 16px;
 }
 
-#light {
-  transition-duration: 0.15s;
+.light {
+  transition-duration: 0.3s;
   transition-property: opacity;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   position: fixed;
+  display: block;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: rgba(255, 255, 255, 0.55);
   opacity: 0;
-  z-index: 97;
 }
-#menu-add {
+.menu {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
   margin: 0 0 0 0;
   background-color: transparent;
-  z-index: 98;
 }
-#menu-add-outer {
+.menu-outer {
   display: none;
   position: fixed;
   width: 100%;
@@ -1090,9 +1094,14 @@ dt {
   left: 0;
   margin: 0;
   background-color: transparent;
-  z-index: 98;
   pointer-events: none;
   overflow: hidden;
+}
+#menu-add, #menu-add-outer {
+  z-index: 98;
+}
+#menu-settings, #menu-settings-outer {
+  z-index: 100;
 }
 
 #cards {

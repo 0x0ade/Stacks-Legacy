@@ -31,6 +31,7 @@
     <script src="./javascripts/voicesearch.js" async defer></script>
     <script src="./javascripts/tinycolor.js" async defer></script>
     <script src="./javascripts/labels.js" async defer></script>
+    <script src="./javascripts/settings.js" async defer></script>
     
     <!-- Stacks sources -->
     <script src="./javascripts/sources/gcard.js"></script>
@@ -90,11 +91,12 @@
     <div class="footer-wrapper">
       <div class="footer">
         <div class="button-round" label="" id="button-clear" localize="card.clear" localize-attr="label"><img src="./images/icon-clear-dark.png"></div>
+        <div class="button-flat" label="" id="button-settings" localize="settings.button" localize-attr="label"><img src="./images/material_ics/ic_settings_black_48px.svg"></div>
         <div class="footer-text">Stacks by Maik Macho and <a href="https://github.com/AngelDE98/gnow-web/graphs/contributors">collaborators on GitHub</a>; Google, Google Now and Google APIs by Google.</div>
       </div>
     </div>
     <div id="float-outer">
-      <div id="dark">
+      <div class="dark">
       </div>
       <div id="float">
         <div id="float-inner">
@@ -105,10 +107,16 @@
         </div>
       </div>
     </div>
-    <div id="menu-add-outer">
-      <div id="light">
+    <div class="menu-outer" id="menu-add-outer">
+      <div class="light" style="z-index: 97;">
       </div>
-      <div id="menu-add">
+      <div class="menu" id="menu-add">
+      </div>
+    </div>
+    <div class="menu-outer" id="menu-settings-outer">
+      <div class="light" style="z-index: 99;">
+      </div>
+      <div class="menu" id="menu-settings">
       </div>
     </div>
     <script>
@@ -467,8 +475,9 @@
         var menuOuter = $("#menu-add-outer");
         menuOuter.css("pointer-events", "auto");
         menuOuter.css("display", "block");
-        $("#light").css("opacity", 1);
-        $("#light").click(buttonAddMenuHide);
+        var menuLight = menuOuter.find(".light");
+        menuLight.css("opacity", 1);
+        menuLight.click(function() {buttonAddMenuHide();});
         
         var showButtons = function() {
           var right = $(window).width() - (buttonAdd.offset().left + buttonAdd.outerWidth());
@@ -519,7 +528,7 @@
         
         var menuOuter = $("#menu-add-outer");
         menuOuter.css("pointer-events", "none");
-        $("#light").css("opacity", 0);
+        menuOuter.find(".light").css("opacity", 0);
         
         var buttons = $(".button-add-source");
         buttons.each(function(i) {
