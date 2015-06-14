@@ -100,6 +100,7 @@
         <div class="footer-text">Stacks by Maik Macho and <a href="https://github.com/AngelDE98/gnow-web/graphs/contributors">collaborators on GitHub</a>; Google, Google Now and Google APIs by Google.</div>
       </div>
     </div>
+    
     <div id="float-outer">
       <div class="dark">
       </div>
@@ -112,12 +113,14 @@
         </div>
       </div>
     </div>
+    
     <div class="menu-outer" id="menu-add-outer">
       <div class="light" style="z-index: 97;">
       </div>
       <div class="menu" id="menu-add">
       </div>
     </div>
+    
     <div class="menu-outer" id="menu-settings-outer">
       <div class="light" style="z-index: 99;">
       </div>
@@ -127,8 +130,15 @@
           <h2 localize="settings.header"></h2>
         </div>
         
+          <div class="input-field col s12">
+            <select id="themer-select">
+            </select>
+            <label>Select Theme</label>
+          </div>
+        
       </div>
     </div>
+    
     <script>
       function idify(str) {
         return encodeURIComponent(str).replace(/\%|\(|\)|\#|\.|\[|\]|\(|\}|\:/g, "");

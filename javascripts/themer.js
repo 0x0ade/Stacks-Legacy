@@ -24,6 +24,13 @@ themer.refresh = function() {
   }
   
   localStorage.setItem("theme", themer.themeid);
+  
+  var select = $("#themer-select");
+  select.empty();
+  for (var i = 0; i < themes.length; i++) {
+    select.append("<option value=\"" + themes[i].id + "\" " + (themes[i].id == themer.themeid ? "selected" : "") + ">" + themes[i].name + "</option>");
+  }
+  select.material_select();
 };
 
 $(document).ready(function() {

@@ -5,3 +5,7 @@
 *, *:before, *:after {
   box-sizing: initial; /*fixes the microphone symbol position messing up*/
 }
+
+.input-field label {
+  left: 0;
+}
