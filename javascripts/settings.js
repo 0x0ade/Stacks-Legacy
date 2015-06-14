@@ -10,9 +10,9 @@ settings.show = function() {
   $("#button-settings>img").css("transform", "rotate(60deg)");
   
   var menu = $("#menu-settings");
+  menu.css("right", 0);
   var menuOuter = $("#menu-settings-outer");
   menuOuter.css("pointer-events", "auto");
-  menuOuter.css("display", "block");
   var menuLight = menuOuter.find(".light");
   menuLight.css("opacity", 1);
   menuLight.click(function() {settings.hide();});
@@ -26,6 +26,7 @@ settings.hide = function() {
   
   $("#button-settings>img").css("transform", "rotate(0deg)");
   
+  $("#menu-settings").css("right", -800);
   var menuOuter = $("#menu-settings-outer");
   menuOuter.css("pointer-events", "none");
   menuOuter.find(".light").css("opacity", 0);

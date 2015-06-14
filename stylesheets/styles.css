@@ -1086,7 +1086,6 @@ dt {
   background-color: transparent;
 }
 .menu-outer {
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1097,11 +1096,26 @@ dt {
   pointer-events: none;
   overflow: hidden;
 }
+
 #menu-add, #menu-add-outer {
   z-index: 98;
 }
+
 #menu-settings, #menu-settings-outer {
   z-index: 100;
+}
+#menu-settings {
+  transition-duration: 0.3s;
+  transition-property: right;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  top: 0;
+  right: -800px;
+  width: 25%;
+  min-width: 512px;
+  max-width: 768px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.175), -8px 0px 8px rgba(0, 0, 0, 0.1225), 0px 0px 32px rgba(0, 0, 0, 0.15);
 }
 
 #cards {
