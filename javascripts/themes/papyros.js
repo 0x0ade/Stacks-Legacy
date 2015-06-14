@@ -4,7 +4,7 @@ papyros.id = "papyros";
 papyros.name = "Papyros";
 papyros.stylesheet = "./stylesheets/themes/papyros.css";
 
-gnow.init = function() {
+papyros.init = function() {
   //TODO
 };
 
