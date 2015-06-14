@@ -34,6 +34,15 @@
     "enable": "Google Doodle"
   },
   
+  "settings": {
+    "button": "Einstellungen",
+    "header": "Einstellungen"
+  },
+  
+  "navigation": {
+    "back": "Zurück"
+  },
+  
   "sources": {},
   
   "hotwords": [
