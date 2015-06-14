@@ -96,7 +96,7 @@ gnow.init = function() {
       "<a href=\"https://images.google.com/\" id=\"cbar_images\" localize=\"cbar.images\">"+localized("cbar.images")+"</a>"+
       "<a href=\"https://www.google.com/\" id=\"cbar_google\">google.com</a>"+
     "</div>"+
-    "<form action=\"#\" id=\"checkbox-doodle-form\"  style=\"display: none;\"><p>"+
+    "<form action=\"#\" id=\"checkbox-doodle-form\" style=\"display: none;\"><p>"+
       "<input type=\"checkbox\" id=\"checkbox-doodle\" checked=\"checked\" onclick=\"gnow.doodle.setDoodleEnabled(this.checked)\"/>"+
       "<label for=\"checkbox-doodle\" localize=\"doodle.enable\"></label>"+
     "</p></form>"+

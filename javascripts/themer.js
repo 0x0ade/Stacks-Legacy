@@ -31,7 +31,23 @@ themer.refresh = function() {
     select.append("<option value=\"" + themes[i].id + "\" " + (themes[i].id == themer.themeid ? "selected" : "") + ">" + themes[i].name + "</option>");
   }
   select.material_select();
+  select.parent().find("li").each(function(i) {
+    $(this).click(function() {
+      themer.setTheme(themes[i]);
+    });
+  });
 };
+
+themer.setTheme = function(theme) {
+  if (typeof theme == "string") {
+    themer.themeid = theme;
+  } else if (theme && theme.id) {
+    themer.themeid = theme.id;
+  } else {
+    console.log("themer: invalid theme", theme);
+  }
+  themer.refresh();
+}
 
 $(document).ready(function() {
   themer.refresh();
