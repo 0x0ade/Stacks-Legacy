@@ -98,7 +98,7 @@ gnow.init = function() {
     "</div>"+
     "<form action=\"#\" id=\"checkbox-doodle-form\" style=\"display: none;\"><p>"+
       "<input type=\"checkbox\" id=\"checkbox-doodle\" checked=\"checked\" onclick=\"gnow.doodle.setDoodleEnabled(this.checked)\"/>"+
-      "<label for=\"checkbox-doodle\" localize=\"doodle.enable\"></label>"+
+      "<label for=\"checkbox-doodle\" localize=\"doodle.enable\">"+localized("doodle.enable")+"</label>"+
     "</p></form>"+
   "</div>");
   
