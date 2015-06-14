@@ -1,0 +1,7 @@
+.progress {
+  margin: 0 0 0 0; /*fixes progress bar being centered vertically*/
+}
+
+*, *:before, *:after {
+  box-sizing: initial; /*fixes the microphone symbol position messing up*/
+}
