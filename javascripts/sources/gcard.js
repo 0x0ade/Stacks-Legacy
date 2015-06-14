@@ -9,7 +9,7 @@ gcard.handleQuery = function(query, success, fail) {
   }
     
   $.ajax({
-    url: "https://cors-anywhere.herokuapp.com/google.com/search?pws=0&gl="+loc.country+"&hl="+loc.country+"&fheit="+(loc.temp=="F"?1:0)+"&gll="+Math.round(1000000*loc.lat)+","+Math.round(1000000*loc.lng)+"&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " "),
+    url: "https://vast-spire-8546.herokuapp.com/google.com/search?pws=0&gl="+loc.country+"&hl="+loc.country+"&fheit="+(loc.temp=="F"?1:0)+"&gll="+Math.round(1000000*loc.lat)+","+Math.round(1000000*loc.lng)+"&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " "),
     type: "GET",
     success: function(data) {gcardProcess(query, data, success, fail);},
     error: function(jqXHR, status, error) {fail();},

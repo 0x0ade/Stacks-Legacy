@@ -100,7 +100,7 @@ wikipedia.addCard = function(data, success, fail) {
             $("#hidden").append(img);
           }
       };
-      xhr.open("GET", "https://cors-anywhere.herokuapp.com/"+data.image.replace(new RegExp("https://", "g"), ""), true);
+      xhr.open("GET", "https://vast-spire-8546.herokuapp.com/"+data.image.replace(new RegExp("https://", "g"), ""), true);
       xhr.responseType = "arraybuffer";
       xhr.setRequestHeader("x-requested-with", "gnowwebmockup");
       xhr.send();
