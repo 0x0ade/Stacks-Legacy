@@ -70,7 +70,7 @@
     <div class="main">
       <div class="content">
         <section>
-          <div class="button-round" id="button-add" label="" localize="card.add" localize-attr="label">
+          <div class="button-round waves-effect waves-circle" id="button-add" label="" localize="card.add" localize-attr="label">
             <img src="./images/icon-add-dark.png">
           </div>
           <div id="toolbar">
@@ -95,8 +95,8 @@
     </div>
     <div class="footer-wrapper">
       <div class="footer">
-        <div class="button-round" label="" id="button-clear" localize="card.clear" localize-attr="label"><img src="./images/icon-clear-dark.png"></div>
-        <div class="button-flat" label="" id="button-settings" localize="settings.button" localize-attr="label"><img src="./images/material_ics/ic_settings_black_48px.svg"></div>
+        <div class="button-round waves-effect waves-circle" label="" id="button-clear" localize="card.clear" localize-attr="label"><img src="./images/icon-clear-dark.png"></div>
+        <div class="button-flat waves-effect waves-circle" label="" id="button-settings" localize="settings.button" localize-attr="label"><img src="./images/material_ics/ic_settings_black_48px.svg"></div>
         <div class="footer-text">Stacks by Maik Macho and <a href="https://github.com/AngelDE98/gnow-web/graphs/contributors">collaborators on GitHub</a>; Google, Google Now and Google APIs by Google.</div>
       </div>
     </div>
@@ -105,7 +105,7 @@
       </div>
       <div id="float">
         <div id="float-inner">
-          <div class="button-round" id="button-g"><img src="./images/icon-g-big.png"></div>
+          <div class="button-round waves-effect waves-light waves-circle" id="button-g"><img src="./images/icon-g-big.png"></div>
           <div id="speech-outer">
             <div id="speech" localize="search.voice.now"></div><div id="speech-approx" localize="search.voice.example"></div>
           </div>
@@ -123,7 +123,7 @@
       </div>
       <div class="menu" id="menu-settings">
         <div class="menu-header" id="menu-settings-header">
-          <div class="button-flat button-header-main" label="" label-position="bottom" localize="navigation.back" localize-attr="label"><img src="./images/material_ics/ic_arrow_back_white_24px.svg"></div>
+          <div class="button-flat button-header-main waves-effect waves-light waves-circle" label="" label-position="bottom" localize="navigation.back" localize-attr="label"><img src="./images/material_ics/ic_arrow_back_white_24px.svg"></div>
           <h2 localize="settings.header"></h2>
         </div>
         
@@ -495,7 +495,7 @@
               continue;
             }
             var text = localized("sources."+sources[i].name);
-            var item = $("<div class=\"button-round button-add-source\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
+            var item = $("<div class=\"button-round button-add-source waves-effect waves-circle\" label=\""+text+"\" label-position=\"left\" style=\"bottom: "+(48+(i+1)*64)+"px; right: "+right+"px; background-color: "+(sources[i].colors.bg)+"; opacity: 0;\" source=\""+sources[i].name+"\"><img src=\"./images/icon-source-"+sources[i].name+(sources[i].colors.fg)+".png\"></div>");
             menu.append(item);
             setTimeout((function(item, i) {return function() {
               item.css("opacity", 1);

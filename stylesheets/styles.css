@@ -660,7 +660,7 @@ dt {
 
 .button-flat {
   font: 16px "Roboto Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  padding: 10px 12px;
+  /*padding: 10px 12px;*/
   margin-top: 6px;
   line-height: 14px;
   font-size: 14px;
@@ -930,8 +930,11 @@ dt {
   height: 24px;
 }
 .button-round img {
-  margin: 16px 0 0 16px;
+  margin: 16px 0 0 0;
   opacity: 0.55;
+}
+.button-flat img {
+  margin: 5px 0 0 0;
 }
 
 #button-add {
@@ -1123,7 +1126,7 @@ dt {
   position: absolute;
   top: 16px;
   left: 16px;
-  margin: 0 0 0 0;
+  margin: -5px 0 0 0;
   padding: 0 0 0 0;
 }
 
@@ -1251,9 +1254,13 @@ dt {
     right: 32px;
     margin: 0 0 0 0;
   }
+  
+  #menu-settings {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 @media print, screen and (max-width: 480px) {
-  #header {
-    margin-top: -20px;
-  }
+  /*meh*/
 }
