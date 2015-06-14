@@ -16,6 +16,7 @@ settings.show = function() {
   var menuLight = menuOuter.find(".light");
   menuLight.css("opacity", 1);
   menuLight.click(function() {settings.hide();});
+  menu.find(".button-header-main").click(function() {settings.hide();});
 };
 
 settings.hide = function() {
