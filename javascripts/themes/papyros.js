@@ -1,7 +1,7 @@
 window.papyros = {};
 
 papyros.id = "papyros";
-papyros.name = "Papyros";
+papyros.name = "Papyros (WIP)";
 papyros.stylesheet = "./stylesheets/themes/papyros.css";
 
 papyros.init = function() {
