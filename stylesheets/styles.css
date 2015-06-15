@@ -1143,8 +1143,7 @@ dt {
   padding: 0 0 0 0;
 }
 .scrollable {
-  display: block;
-  overflow: scroll;
+  overflow: auto;
   height: calc(100% - 56px);
   padding: 0 0 56px 0;
 }
