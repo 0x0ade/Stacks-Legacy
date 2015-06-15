@@ -9,12 +9,9 @@ gnow.doodle.date = new Date();
 gnow.doodle.dateArray = [gnow.doodle.date.getFullYear(), gnow.doodle.date.getMonth()+1, gnow.doodle.date.getUTCDate()];
 gnow.doodle.doodle = null;
 
-gnow.doodle.setDoodleEnabled = function(enabled) {
+gnow.doodle.setDoodleEnabled = function(enabled, unload) {
   if (enabled == "false") {
     enabled = false;
-  }
-  if (gnow.doodle.doodle && $("#checkbox-doodle-form").css("display") != "block") {
-    $("#checkbox-doodle-form").css("display", "block");
   }
   if (enabled && gnow.doodle.doodle) {
     $(".doodle").css("background-image", "url(\"https:"+gnow.doodle.doodle.hires_url+"\")");
@@ -27,7 +24,7 @@ gnow.doodle.setDoodleEnabled = function(enabled) {
     });
     $(".doodle-shadow").css("display", "none");
     $(".header").css("background-image", "url(\"\")");
-    $("#chromebar a, #checkbox-doodle-form").css("color", "#000000");
+    $("#chromebar a").css("color", "#000000");
   } else {
     gnow.background.refresh();
     removeLabelListener($(".doodle"));
@@ -35,7 +32,9 @@ gnow.doodle.setDoodleEnabled = function(enabled) {
     $(".doodle").off("click");
   }
   $("#checkbox-doodle").prop("checked", enabled);
-  localStorage.setItem("doodleEnabled", (enabled=="false"||!enabled)?"false":"true");
+  if (!unload) {
+    localStorage.setItem("doodleEnabled", (enabled=="false"||!enabled)?"false":"true");
+  }
 };
 
 gnow.doodle.process = function(data) {
@@ -85,7 +84,7 @@ gnow.background.refresh = function() {
   $(".header").css("background-image", "url(\""+currentTime.bg+"\")");
   $(".doodle").css("background-image", "url(\""+currentTime.fg+"\")");
   $(".doodle-shadow").css("display", "block");
-  $("#chromebar a, #checkbox-doodle-form").css("color", currentTime.color);
+  $("#chromebar a").css("color", currentTime.color);
 };
 
 gnow.init = function() {
@@ -96,10 +95,6 @@ gnow.init = function() {
       "<a href=\"https://images.google.com/\" id=\"cbar_images\" localize=\"cbar.images\">"+localized("cbar.images")+"</a>"+
       "<a href=\"https://www.google.com/\" id=\"cbar_google\">google.com</a>"+
     "</div>"+
-    "<form action=\"#\" id=\"checkbox-doodle-form\" style=\"display: none;\"><p>"+
-      "<input type=\"checkbox\" id=\"checkbox-doodle\" checked=\"checked\" onclick=\"gnow.doodle.setDoodleEnabled(this.checked)\"/>"+
-      "<label for=\"checkbox-doodle\" localize=\"doodle.enable\">"+localized("doodle.enable")+"</label>"+
-    "</p></form>"+
   "</div>");
   
   $(".header").after(top);
@@ -107,6 +102,16 @@ gnow.init = function() {
   top.after($("<div class=\"doodle theme-gnow\"></div>"));
   top.after($("<div class=\"doodle-shadow theme-gnow\"></div>"));
   
+  $("#settings-theme-custom").append($("<div class=\"settings-item\">"+
+      "<p class=\"settings-item-text\" localize=\"doodle.enable\">"+localized("doodle.enable")+"</p>"+
+      "<div class=\"settings-item-toggle switch\">"+
+        "<label>"+
+          "<input type=\"checkbox\" id=\"checkbox-doodle\" checked=\"checked\" onclick=\"gnow.doodle.setDoodleEnabled(this.checked)\"/>"+
+          "<span class=\"lever\"></span>"+
+        "</label>"+
+      "</div>"+
+    "</div>"));
+    
   $.ajax({
     url: "https://peaceful-shelf-4149.herokuapp.com/?callback=gnow.doodle.process&url=https://www.google.com/doodles/json/"+gnow.doodle.date.getFullYear()+"/"+(gnow.doodle.date.getMonth()+1)+"?callback=?",
     type: "GET",
@@ -121,14 +126,15 @@ gnow.init = function() {
 };
 
 gnow.unload = function() {
-  gnow.doodle.setDoodleEnabled(false);
+  gnow.doodle.setDoodleEnabled(false, true);
+  gnow.doodle.doodle = null;
   
   $(".theme-gnow").remove();
   
   $(".header").css("background-image", "");
   $(".doodle").css("background-image", "");
   $(".doodle-shadow").css("display", "");
-  $("#chromebar a, #checkbox-doodle-form").css("color", "");
+  $("#chromebar a").css("color", "");
 };
 
 window.themes = window.themes || [];

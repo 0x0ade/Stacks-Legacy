@@ -1093,6 +1093,18 @@ dt {
   padding: 64px 8px 8px 8px;
   background-color: transparent;
 }
+.menu h2 {
+  font-family: 'Roboto Medium', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0 0 32px 0;
+  color: #009688;
+}
+.menu h3 {
+  font-family: 'Roboto Medium', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  margin: 0 0 24px 0;
+  color: #009688;
+}
 .menu-outer {
   position: fixed;
   width: 100%;
@@ -1150,6 +1162,25 @@ dt {
   height: 100%;
   background: #ffffff;
   box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.175), -8px 0px 8px rgba(0, 0, 0, 0.1225), 0px 0px 32px rgba(0, 0, 0, 0.15);
+}
+
+.settings-item {
+  margin: 0 0 0 0;
+  padding: 16px 0 16px 0;
+  display: block;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px rgba(0, 0, 0, 0.125) solid;
+}
+
+.settings-item-text {
+  display: inline;
+}
+
+.settings-item-toggle {
+  display: inline;
+  position: absolute;
+  right: 0;
 }
 
 #cards {
