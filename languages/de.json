@@ -36,7 +36,14 @@
   
   "settings": {
     "button": "Einstellungen",
-    "header": "Einstellungen"
+    "header": "Einstellungen",
+    "theme": {
+      "header": "Design",
+      "select": "Design wählen",
+      "custom": {
+        "header": "Design-spezifische Einstellungen"
+      }
+    }
   },
   
   "navigation": {
