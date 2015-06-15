@@ -33,6 +33,33 @@ settings.hide = function() {
   menuOuter.find(".light").css("opacity", 0);
 };
 
+settings.removeHotword = function(elem) {
+  var field = $(elem).parent();
+  field.velocity({
+    opacity: 0,
+    maxHeight: 0
+  }, {
+    duration: 300,
+    complete: function() {
+      field.remove();
+    }
+  });
+};
+
 $(document).ready(function() {
   $("#button-settings").click(settings.show);
+  
+  $("#settings-hotword-add").on("click", function() {
+    var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 0; max-height: 0;\">\n"+
+      "<a href=\"#\" class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></a>\n"+
+      "<input type=\"text\">\n"+
+    "</div>");
+    $("#settings-hotword-items").append(field);
+    field.velocity({
+      opacity: 1,
+      maxHeight: 128
+    }, {
+      duration: 300
+    });
+  });
 });

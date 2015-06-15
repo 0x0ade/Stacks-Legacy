@@ -130,16 +130,33 @@
           <h2 localize="settings.header"></h2>
         </div>
         
-        <div id="settings-theme">
-          <h2 localize="settings.theme.header"></h2>
-          <div class="input-field col s12">
-            <select id="settings-theme-select">
-            </select>
-            <label localize="settings.theme.select"></label>
+        <div class="scrollable">
+        
+          <div id="settings-theme">
+            <h2 localize="settings.theme.header"></h2>
+            <div class="input-field col s12">
+              <select id="settings-theme-select">
+              </select>
+              <label localize="settings.theme.select"></label>
+            </div>
+            <h3 localize="settings.theme.custom.header"></h3>
+            <div id="settings-theme-custom">
+            </div>
           </div>
-          <h3 localize="settings.theme.custom.header"></h3>
-          <div id="settings-theme-custom">
+          
+          <div id="settings-hotword">
+            <h2 localize="settings.hotword.header"></h2>
+            <div id="settings-hotword-items">
+              <!--div class="settings-hotword-item input-field col s12">
+                <input type="text">
+              </div-->
+            </div>
+            <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-add"><i class="mdi-content-add left"></i><div class="nodiv" localize="settings.hotword.add"></div></a>
+            <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-apply"><i class="mdi-action-done left"></i><div class="nodiv" localize="settings.hotword.apply"></div></a>
           </div>
+          
+          <div style="display: block; width: 100%; height: 112px;"></div>
+        
         </div>
         
       </div>

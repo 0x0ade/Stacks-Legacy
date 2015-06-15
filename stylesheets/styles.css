@@ -1096,7 +1096,7 @@ dt {
 .menu h2 {
   font-family: 'Roboto Medium', "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  margin: 0 0 32px 0;
+  margin: 16px 0 32px 0;
   color: #009688;
 }
 .menu h3 {
@@ -1142,6 +1142,12 @@ dt {
   margin: -5px 0 0 0;
   padding: 0 0 0 0;
 }
+.scrollable {
+  display: block;
+  overflow: scroll;
+  height: calc(100% - 56px);
+  padding: 0 0 56px 0;
+}
 
 #menu-add, #menu-add-outer {
   z-index: 98;
@@ -1171,6 +1177,10 @@ dt {
   position: relative;
   width: 100%;
   border-bottom: 1px rgba(0, 0, 0, 0.125) solid;
+}
+
+.menu .input-field {
+  margin-top: 0;
 }
 
 .settings-item-text {

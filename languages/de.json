@@ -37,13 +37,21 @@
   "settings": {
     "button": "Einstellungen",
     "header": "Einstellungen",
+    
     "theme": {
       "header": "Design",
       "select": "Design wählen",
       "custom": {
         "header": "Design-spezifische Einstellungen"
       }
+    },
+    
+    "hotword": {
+      "header": "Hotwörter",
+      "add": "Hinzufügen",
+      "apply": "Anwenden"
     }
+    
   },
   
   "navigation": {

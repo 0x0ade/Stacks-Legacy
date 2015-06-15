@@ -49,13 +49,21 @@
   "settings": {
     "button": "Settings",
     "header": "Settings",
+    
     "theme": {
       "header": "Theme",
       "select": "Select theme",
       "custom": {
         "header": "Theme-specific settings"
       }
+    },
+    
+    "hotword": {
+      "header": "Hotwords",
+      "add": "Add",
+      "apply": "Apply"
     }
+    
   },
   
   "navigation": {

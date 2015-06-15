@@ -7,5 +7,59 @@
 }
 
 .input-field label {
-  left: 0;
+  left: 0; /*fixes text field label alignment in settings*/
+}
+
+input[type=text] {
+  height: 2rem; /*fixes too large single line text fields*/
+}
+
+/*input field suffix "patch"*/
+.input-field .suffix {
+  position: absolute;
+  right: 0;
+  width: 3rem;
+  font-size: 2rem;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  -ms-transition: color 0.2s;
+  transition: color 0.2s; }
+  .input-field .suffix.active {
+    color: #26a69a; }
+.input-field .suffix ~ input, .input-field .suffix ~ textarea {
+  margin-right: 3rem;
+  width: 92%;
+  width: calc(100% - 3rem); }
+.input-field .suffix ~ textarea {
+  padding-top: 0.8rem; }
+.input-field .suffix ~ label {
+  margin-right: 3rem; }
+@media only screen and (max-width : 992px) {
+  .input-field .suffix ~ input {
+    width: 86%;
+    width: calc(100% - 3rem); }
+}
+@media only screen and (max-width : 600px) {
+  .input-field .suffix ~ input {
+    width: 80%;
+    width: calc(100% - 3rem); }
+}
+
+/*fix icon alignment of the text field suffix*/
+.suffix {
+  width: 3rem;
+  height: 3rem;
+}
+.suffix i {
+  position: absolute;
+  top: -1rem;
+  right: 0.5rem;
+}
+
+/*support class for localize.js in Materialize*/
+.nodiv {
+  display: inline;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
 }
