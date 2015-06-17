@@ -49,6 +49,16 @@ settings.removeHotword = function(elem) {
 $(document).ready(function() {
   $("#button-settings").click(settings.show);
   
+  for (var i = 0; i < voicesearch.hotwordsCustom.length; i++) {
+    console.log("settings: found hotword: " + voicesearch.hotwordsCustom[i]);
+    var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 1; max-height: 128px;\">\n"+
+      "<a href=\"#\" class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></a>\n"+
+      "<input type=\"text\">\n"+
+    "</div>");
+    field.find("input").val(voicesearch.hotwordsCustom[i]);
+    $("#settings-hotword-items").append(field);
+  }
+  
   $("#settings-hotword-add").on("click", function() {
     var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 0; max-height: 0;\">\n"+
       "<a href=\"#\" class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></a>\n"+
@@ -62,4 +72,16 @@ $(document).ready(function() {
       duration: 300
     });
   });
+  
+  $("#settings-hotword-apply").on("click", function() {
+    voicesearch.hotwordsCustom = [];
+    $("#settings-hotword-items").children().each(function() {
+      voicesearch.hotwordsCustom.push($(this).find("input").val());
+    });
+    
+    localStorage.setItem("hotwords", JSON.stringify(voicesearch.hotwordsCustom));
+    
+    Materialize.toast(localized("settings.hotword.applied"), 2000);
+  });
+  
 });

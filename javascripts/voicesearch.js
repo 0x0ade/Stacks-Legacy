@@ -6,8 +6,8 @@ voicesearch.hotwords = [
   "okay papyrus",
   "hi papyrus",
   "hey papyrus"
-  //custom hotwords go in here.
 ];
+voicesearch.hotwordsCustom = JSON.parse(localStorage.getItem("hotwords") || "[]") || [];
 voicesearch.speechTimeoutTime = 150;
 
 if (localize) {
@@ -132,16 +132,26 @@ voicesearch.hotword = {
       }
     }
     var text = final.toLowerCase()+" "+approx.toLowerCase();
-    for (var i = 0; i < voicesearch.hotwords.length; i++) {
+    var hotword = null;
+    for (var i = 0; i < voicesearch.hotwords.length && !hotword; i++) {
       if (text.indexOf(voicesearch.hotwords[i]) >= 0) {
-        console.log("voicesearch: found hotword " + voicesearch.hotwords[i]);
-        voicesearch.ignore = voicesearch.hotwords[i];
-        voicesearch.ignoreRegexp = new RegExp(voicesearch.ignore, "i");
-        voicesearch.showSpeechOverlay();
-        voicesearch.stop(false, true);
-        voicesearch.startListening(true);
+        hotword = voicesearch.hotwords[i];
         break;
       }
+    }
+    for (var i = 0; i < voicesearch.hotwordsCustom.length && !hotword; i++) {
+      if (text.indexOf(voicesearch.hotwordsCustom[i].toLowerCase()) >= 0) {
+        hotword = voicesearch.hotwordsCustom[i].toLowerCase();
+        break;
+      }
+    }
+    if (hotword) {
+      console.log("voicesearch: found hotword " + hotword);
+      voicesearch.ignore = hotword;
+      voicesearch.ignoreRegexp = new RegExp(voicesearch.ignore, "i");
+      voicesearch.showSpeechOverlay();
+      voicesearch.stop(false, true);
+      voicesearch.startListening(true);
     }
   },
   onstart: function(event) {voicesearch.showHotwordHint();},
