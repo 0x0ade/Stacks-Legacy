@@ -297,7 +297,8 @@ $(document).ready(function() {
     voicesearch.showSpeechOverlay();
     voicesearch.startListening(true);
   });
-  $("#dark").click(function() {
+  //TODO initialize and remove when listening
+  $(".dark").click(function() {
     voicesearch.hideSpeechOverlay();
     voicesearch.stopListening(false);
   });
