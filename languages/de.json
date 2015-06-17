@@ -49,7 +49,8 @@
     "hotword": {
       "header": "Hotwörter",
       "add": "Hinzufügen",
-      "apply": "Anwenden"
+      "apply": "Anwenden",
+      "applied": "Eigene Hotwörter wurden gespeichert."
     }
     
   },

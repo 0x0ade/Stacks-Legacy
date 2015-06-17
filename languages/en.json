@@ -61,7 +61,8 @@
     "hotword": {
       "header": "Hotwords",
       "add": "Add",
-      "apply": "Apply"
+      "apply": "Apply",
+      "applied": "Custom hotwords saved."
     }
     
   },
