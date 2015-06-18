@@ -978,6 +978,18 @@ dt {
   height: 40px;
   opacity: 1;
 }
+#button-g-backdrop {
+  transform: scale(1.0);
+  width: 80px;
+  height: 80px;
+  border-radius: 46px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: -40px 16px 0 0;
+  z-index: 151;
+}
 #button-settings {
   position: absolute;
   bottom: 64px;

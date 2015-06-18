@@ -8,7 +8,7 @@ voicesearch.hotwords = [
   "hey papyrus"
 ];
 voicesearch.hotwordsCustom = JSON.parse(localStorage.getItem("hotwords") || "[]") || [];
-voicesearch.speechTimeoutTime = 150;
+voicesearch.speechTimeoutTime = 250;
 
 if (localize) {
   console.log("voicesearch.js found localize.js; adding listeners...");
@@ -22,9 +22,24 @@ if (localize) {
 //TODO load hotwords from local storage
 
 voicesearch.recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition || window.oSpeechRecognition)();
+voicesearch.active = false;
 voicesearch.ignore = "";
 voicesearch.ignoreRegexp = null;
 
+voicesearch.override = {
+  onerror: function() {
+    voicesearch.active = false;
+    if (voicesearch.context.onerror) {voicesearch.context.onerror.apply(this, arguments)};
+  },
+  onstart: function() {
+    voicesearch.active = true;
+    if (voicesearch.context.onstart) {voicesearch.context.onstart.apply(this, arguments)};
+  },
+  onend: function() {
+    voicesearch.active = false;
+    if (voicesearch.context.onend) {voicesearch.context.onend.apply(this, arguments)};
+  }
+};
 voicesearch.speech = {
   name: "speech",
   continuous: true,
@@ -37,7 +52,13 @@ voicesearch.speech = {
     var final = "";
     var approx = "";
     var isFinal = true;
+    var backdrop = $("#button-g-backdrop");
+    backdrop.css("transition-duration", "");
+    backdrop.css("transition-property", "");
+    backdrop.css("transition-timing-function", "");
+    var convidenceSum = 0;
     for (var i = event.resultIndex; i < event.results.length; i++) {
+      convidenceSum += event.results[i][0].confidence;
       var transcript = event.results[i][0].transcript;
       if (transcript.toLowerCase().indexOf(voicesearch.ignore) >= 0) {
         transcript = transcript.substr(transcript.toLowerCase().indexOf(voicesearch.ignore) + voicesearch.ignore.length);
@@ -60,6 +81,11 @@ voicesearch.speech = {
           continue;
         }
       }
+      backdrop.css("transform", "scale("+(1.0 + (1.0 - (convidenceSum / (event.results.length - event.resultIndex))) + Math.sin(new Date().getTime() / 300 + Math.random() * 0.3) * 0.2 )+")");
+      /*backdrop.css("transition-duration", "0.1s");
+      backdrop.css("transition-property", "transform");
+      backdrop.css("transition-timing-function", "cubic-bezier(0, 0, 0.2, 1)");
+      backdrop.css("transform", "scale(1.0)");*/
       if (transcript.length <= 1) {
         isFinal = false;
         continue;
@@ -271,7 +297,11 @@ voicesearch.start = function(context, keepSession) {
   
   voicesearch.recognition.lang = loc.lang+"-"+loc.country;
   
-  if (!keepSession) {
+  for (var key in (voicesearch.override || {})) {
+    voicesearch.recognition[key] = voicesearch.override[key];
+  }
+  
+  if (!keepSession || !voicesearch.active) {
     voicesearch.recognition.start();
   } else if (voicesearch.recognition.onstart && voicesearch.context) {
     voicesearch.recognition.onstart();
@@ -283,6 +313,7 @@ voicesearch.stop = function(force, keepSession) {
   
   if (force) {
     voicesearch.recognition.onend = null;
+    voicesearch.active = !keepSession;
   }
   
   if (!keepSession) {
@@ -290,6 +321,8 @@ voicesearch.stop = function(force, keepSession) {
   } else if (voicesearch.recognition.onend && voicesearch.context) {
     voicesearch.recognition.onend();
   }
+  
+  voicesearch.active = keepSession;
 };
 
 $(document).ready(function() {
