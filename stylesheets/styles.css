@@ -1226,6 +1226,7 @@ dt {
   width: 64px;
   height: 64px;
   font-size: 64px;
+  margin: 0 16px 0 0;
 }
 .emptystate-text {
   display: block;
