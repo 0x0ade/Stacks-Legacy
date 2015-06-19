@@ -71,6 +71,12 @@
     "back": "Back"
   },
   
+  "emptystate": {
+    "search": "Cards appear as you search for something.",
+    "voice": "Stacks responds to \"Ok Google\" and your own hotwords.",
+    "qa": "Ask any questions as if you would do with Google."
+  },
+  
   "sources": {},
   
   "hotwords": [

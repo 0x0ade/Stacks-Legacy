@@ -59,6 +59,12 @@
     "back": "Zurück"
   },
   
+  "emptystate": {
+    "search": "Karten erscheinen sobald du nach etwas suchst.",
+    "voice": "Stacks antwortet auf \"Ok Google\" und auf eigene Hotwörter.",
+    "qa": "Stelle Fragen, als würdest du sie Google stellen."
+  },
+  
   "sources": {},
   
   "hotwords": [

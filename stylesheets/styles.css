@@ -1204,6 +1204,37 @@ dt {
   right: 0;
 }
 
+#emptystate {
+  display: block;
+  z-index: 40;
+  width: 100%;
+}
+#emptystate {
+  display: block;
+  position: relative;
+  margin: 92px auto 16px auto;
+  max-width: 460px;
+  opacity: 0.75;
+}
+.emptystate-section {
+  display: block;
+  position: relative;
+}
+.emptystate-img {
+  display: block;
+  float: left;
+  width: 64px;
+  height: 64px;
+  font-size: 64px;
+}
+.emptystate-text {
+  display: block;
+  font-size: 24px;
+}
+.emptystate-text:after {
+  clear: both;
+}
+
 #cards {
   margin: 64px 0 64px 0;
   overflow: visible;

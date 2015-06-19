@@ -89,6 +89,21 @@
             </form>
           </div>
           <div id="cards">
+            <div id="emptystate">
+              <div class="emptystate-segment">
+                <i class="mdi-action-search emptystate-img"></i>
+                <p class="emptystate-text" localize="emptystate.search"></p>
+              </div>
+              <div class="emptystate-segment">
+                <i class="mdi-hardware-keyboard-voice emptystate-img"></i>
+                <p class="emptystate-text" localize="emptystate.voice"></p>
+              </div>
+              <div class="emptystate-segment">
+                <i class="mdi-action-question-answer emptystate-img"></i>
+                <p class="emptystate-text" localize="emptystate.qa"></p>
+              </div>
+            </div>
+            <!-- Cards get added here. -->
           </div>
         </section>
       </div>
@@ -153,7 +168,7 @@
               </div-->
             </div>
             <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-add"><i class="mdi-content-add left"></i><div class="nodiv" localize="settings.hotword.add"></div></a>
-            <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-record"><i class="mdi-av-mic left"></i><div class="nodiv" localize="settings.hotword.record"></div></a>
+            <!--a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-record"><i class="mdi-av-mic left"></i><div class="nodiv" localize="settings.hotword.record"></div></a-->
             <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-apply"><i class="mdi-action-done left"></i><div class="nodiv" localize="settings.hotword.apply"></div></a>
           </div>
           
@@ -373,6 +388,7 @@
       };
       
       function appendCard(card) {
+        $("#emptystate").css("display", "none");
         $("#cards").prepend(card);
         //card buttons
         var buttons = $("<div class=\"card-buttons\"></div>");
@@ -479,6 +495,9 @@
         unpinCard(card);
         var cards = $(".card");
         var index = cards.length;
+        if (index <= 1) {
+          $("#emptystate").css("display", "block");
+        }
         var cardId = card.attr("id");
         for (var i = 0; i < cards.length; i++) {
           var card_ = $(cards[i]);
