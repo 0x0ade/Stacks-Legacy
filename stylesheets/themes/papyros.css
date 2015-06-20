@@ -1,0 +1,42 @@
+.header {
+  background-image: url("../../images/papyros/papyros-wallpaper.png");
+}
+
+.logo {
+  color: rgba(255, 255, 255, 0.87);
+  font-family: 'Roboto Light', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  text-align: center;
+  display: block;
+  background-color: transparent;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  top: 157px;
+  position: absolute;
+  width: 100%;
+  z-index: -97;
+}
+.logo h1 {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  font-size: 64px;
+  height: 64px;
+  padding: 0 0 0 64px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+#papyros-icon, #papyros-icon-shadow {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  left: -64px;
+}
+#papyros-icon {
+  top: -32px;
+}
+#papyros-icon-shadow {
+  top: -30px;
+  opacity: 0.1;
+}
+

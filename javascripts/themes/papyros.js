@@ -5,11 +5,11 @@ papyros.name = "Papyros (WIP)";
 papyros.stylesheet = "./stylesheets/themes/papyros.css";
 
 papyros.init = function() {
-  //TODO
+  $(".header").after($("<div class=\"logo theme-papyros\"><h1><img src=\"./images/papyros/papyros-icon-large-shadow.png\" id=\"papyros-icon-shadow\"><img src=\"./images/papyros/papyros-icon-large.png\" id=\"papyros-icon\">Stacks</h1></div>"));
 };
 
 papyros.unload = function() {
-  //TODO
+  $(".theme-papyros").remove();
 };
 
 window.themes = window.themes || [];

@@ -104,9 +104,7 @@ function localizeAll() {
 
 localize.getLanguage = function(lang, cb, fail, handler) {
   localize.langs[lang] = localize.langs[lang] || {};
-  handler = handler || localize.handlers[localize.handler] || function(data) {
-    return data;
-  };
+  handler = handler || localize.handlers[localize.handler] || localize.handlers["default"]
   $.getJSON(localize.path+lang+".json", function(data) {
     data = handler(lang, data);
     localize.langs[lang] = data;
