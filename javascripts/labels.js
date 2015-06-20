@@ -23,9 +23,12 @@ function setTooltip(elem, label, visible) {
     top = elem.offset().top + elem.outerHeight() / 2;
     left = elem.offset().left + elem.outerWidth() + 20;
   }
-  top -= $(window).scrollTop();
-  left -= $(window).scrollLeft();
-  var tooltip = $("<div class=\"tooltip-label tooltip-label-"+position+"\" style=\"z-index: 148; position: fixed; top: "+Math.round(top)+"px; left: "+Math.round(left)+"px;\">"+label+"</div>");
+  var fixed = elem.attr("label-fixed");
+  if (fixed) {
+    top -= $(window).scrollTop();
+    left -= $(window).scrollLeft();
+  }
+  var tooltip = $("<div class=\"tooltip-label tooltip-label-"+position+"\" style=\"z-index: 148; position: "+(fixed?"fixed":"absolute")+"; top: "+Math.round(top)+"px; left: "+Math.round(left)+"px;\">"+label+"</div>");
   $("body").append(tooltip);
   tooltipMap[label] = tooltip;
   if (position == "bottom") {
