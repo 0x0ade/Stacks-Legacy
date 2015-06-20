@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="./stylesheets/materialize-custom.css"> <!-- custom preloader override -->
     
     <!-- Stacks javascript files -->
-    <script src="./javascripts/location.js" async defer></script>
+    <script src="./javascripts/location.js"></script> <!-- can't be loaded asynchronously as voicesearch requires it -->
     <script src="./javascripts/localize.js"></script> <!-- can't be loaded asynchronously as the sources require it to add their own translations for the labels -->
     <script src="./javascripts/scrolltoolbar.js" async defer></script>
     <script src="./javascripts/voicesearch.js"></script> <!-- can't be loaded asynchronously as the settings require it -->
