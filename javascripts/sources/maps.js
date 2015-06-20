@@ -10,8 +10,8 @@ maps.handleQuery = function(query, success, fail) {
     return;
   }
   
-  var cardmap = $("<div style=\"display: none;\"></div>");
-  $("body").append(cardmap);
+  var cardmap = $("<div></div>");
+  $("#hidden").append(cardmap);
   
   var map = new google.maps.Map(cardmap[0], {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -45,7 +45,7 @@ maps.addCard = function(data, success, fail) {
   card.append(cardmap);
   appendCard(card);
   animateCard(card);
-  var pos = new google.maps.LatLng(data.content.geometry.location.k, data.content.geometry.location.D);
+  var pos = new google.maps.LatLng(data.content.geometry.location.A, data.content.geometry.location.F);
   var map = new google.maps.Map(cardmap[0], {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: pos,
