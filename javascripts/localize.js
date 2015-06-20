@@ -1,12 +1,47 @@
 window.localize = {};
-window.localize.langs = {};
-window.localize.dynamic = {};
-window.localize.onstart = true;
-window.localize.delay = 1000;
-window.localize.path = "./languages/";
-window.localize.detected = navigator.language || navigator.userLanguage;
-window.localize.fallbacklang = "en";
-window.localize.listeners = {get: [], geterror: [], add: []};
+localize.langs = {};
+localize.dynamic = {};
+localize.onstart = true;
+localize.delay = 1000;
+localize.path = "./languages/";
+localize.handler = "POEditor";
+localize.detected = navigator.language || navigator.userLanguage;
+localize.fallbacklang = "en";
+localize.listeners = {get: [], geterror: [], add: []};
+
+localize.handlers = {
+  "default": null,
+  "POEditor": function(lang, data) {
+    var newdata = {};
+    for (var ti = 0; ti < data.length; ti++) {
+      var term = data[ti];
+      if (!term.reference || term.reference.length == 0) {
+        continue;
+      }
+      var subkeys = term.reference.split(".");
+      var subkey = "";
+      for (var i = 0; i < subkeys.length - 1; i++) {
+        subkey += subkeys[i];
+        eval("newdata."+subkey+" = newdata."+subkey+" || {}");
+        subkey += ".";
+      }
+      if (term.reference.indexOf("[", subkey.length) > -1) {
+        var arrayName = term.reference.substr(0, term.reference.indexOf("[", subkey.length));
+        var arrayStr = "newdata."+arrayName;
+        var array = eval(arrayStr+" = "+arrayStr+" || []");
+        var newLength = parseInt(term.reference.substr(term.reference.indexOf("[", subkey.length) + 1, term.reference.indexOf("[", subkey.length) - 1)) + 1;
+        for (var i = array.length; i < newLength; i++) {
+          array.push(null);
+        }
+      }
+      if (term.definition.indexOf("[...]") > -1) {
+        term.definition = term.definition.split("[...]");
+      }
+      eval("newdata."+term.reference+" = term.definition");
+    }
+    return newdata;
+  }
+};
 
 function localized(key) {
   var val = null;
@@ -67,8 +102,13 @@ function localizeAll() {
   });
 };
 
-localize.getLanguage = function(lang, cb, fail) {
+localize.getLanguage = function(lang, cb, fail, handler) {
+  localize.langs[lang] = localize.langs[lang] || {};
+  handler = handler || localize.handlers[localize.handler] || function(data) {
+    return data;
+  };
   $.getJSON(localize.path+lang+".json", function(data) {
+    data = handler(lang, data);
     localize.langs[lang] = data;
     if (cb) {
       cb(data);
