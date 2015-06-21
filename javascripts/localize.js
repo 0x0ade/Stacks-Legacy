@@ -96,7 +96,7 @@ function localizeAll() {
     alert("Failed loading the website texts. Please contact the site administrator.");
   });
   
-  localize.getLanguage(navigator.language || navigator.userLanguage, function(data) {
+  localize.getLanguage(loc.lang || navigator.language || navigator.userLanguage, function(data) {
     localize.lang = data;
     localize_();
   });
