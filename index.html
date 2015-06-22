@@ -162,6 +162,15 @@
           
           <div id="settings-hotword">
             <h2 localize="settings.hotword.header"></h2>
+            <div class="settings-item">
+              <p class="settings-item-text" localize="settings.hotword.alwayson"></p>
+              <div class="settings-item-toggle switch">
+                <label>
+                  <input type="checkbox" id="settings-hotword-alwayslistening" checked="checked" onclick="voicesearch.setAlwaysListening(this.checked)"/>
+                  <span class="lever"></span>
+                </label>
+              </div>
+            </div>
             <div id="settings-hotword-items">
               <!--div class="settings-hotword-item input-field col s12">
                 <input type="text">

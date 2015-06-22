@@ -49,6 +49,8 @@ settings.removeHotword = function(elem) {
 $(document).ready(function() {
   $("#button-settings").click(settings.show);
   
+  $("#settings-hotword-alwayslistening").prop("checked", voicesearch.alwaysListening);
+  
   for (var i = 0; i < voicesearch.hotwordsCustom.length; i++) {
     console.log("settings: found hotword: " + voicesearch.hotwordsCustom[i]);
     var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 1; max-height: 128px;\">\n"+
@@ -79,7 +81,7 @@ $(document).ready(function() {
       voicesearch.hotwordsCustom.push($(this).find("input").val());
     });
     
-    localStorage.setItem("hotwords", JSON.stringify(voicesearch.hotwordsCustom));
+    localStorage.setItem("voicesearch:hotwords", JSON.stringify(voicesearch.hotwordsCustom));
     
     Materialize.toast(localized("settings.hotword.applied"), 2000);
   });

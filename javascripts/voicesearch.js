@@ -7,7 +7,10 @@ voicesearch.hotwords = [
   "hi papyrus",
   "hey papyrus"
 ];
-voicesearch.hotwordsCustom = JSON.parse(localStorage.getItem("hotwords") || "[]") || [];
+voicesearch.hotwordsCustom = JSON.parse(localStorage.getItem("voicesearch:hotwords") || "[]") || [];
+voicesearch.alwaysListening = (localStorage.getItem("voicesearch:alwaysListening") || "false") == "true";
+voicesearch.alwaysListeningTimeoutTime = 1000;
+voicesearch.alwaysListeningPhase = -1;
 voicesearch.speechTimeoutTime = 250;
 
 if (localize) {
@@ -19,8 +22,6 @@ if (localize) {
   });
 }
 
-//TODO load hotwords from local storage
-
 voicesearch.recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition || window.oSpeechRecognition)();
 voicesearch.active = false;
 voicesearch.ignore = "";
@@ -29,15 +30,22 @@ voicesearch.ignoreRegexp = null;
 voicesearch.override = {
   onerror: function() {
     voicesearch.active = false;
-    if (voicesearch.context.onerror) {voicesearch.context.onerror.apply(this, arguments)};
+    if (voicesearch.alwaysListening && voicesearch.alwaysListeningPhase == -1) {
+      voicesearch.alwaysListeningPhase = 1;
+      setTimeout(function() {voicesearch.recognition.start();}, voicesearch.alwaysListeningTimeoutTime);
+    } else if (voicesearch.context.onerror) {voicesearch.context.onerror.apply(this, arguments)};
   },
   onstart: function() {
     voicesearch.active = true;
-    if (voicesearch.context.onstart) {voicesearch.context.onstart.apply(this, arguments)};
+    if (voicesearch.context.onstart && voicesearch.alwaysListeningPhase > -1) {voicesearch.context.onstart.apply(this, arguments)};
+    voicesearch.alwaysListeningPhase = -1;
   },
   onend: function() {
     voicesearch.active = false;
-    if (voicesearch.context.onend) {voicesearch.context.onend.apply(this, arguments)};
+    if (voicesearch.alwaysListeningPhase == -1) {
+      voicesearch.alwaysListeningPhase = 1;
+      setTimeout(function() {voicesearch.recognition.start();}, voicesearch.alwaysListeningTimeoutTime);
+    } else if (voicesearch.context.onend) {voicesearch.context.onend.apply(this, arguments)};
   }
 };
 voicesearch.speech = {
@@ -323,6 +331,11 @@ voicesearch.stop = function(force, keepSession) {
   }
   
   voicesearch.active = keepSession;
+};
+
+voicesearch.setAlwaysListening = function(value) {
+  voicesearch.alwaysListening = value;
+  localStorage.setItem("voicesearch:alwaysListening", value);
 };
 
 $(document).ready(function() {

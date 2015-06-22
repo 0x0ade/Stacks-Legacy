@@ -1114,7 +1114,7 @@ dt {
 .menu h3 {
   font-family: 'Roboto Medium', "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
-  margin: 0 0 0 0;
+  margin: 0 0 8px 0;
   color: #009688;
 }
 .menu-outer {
@@ -1182,8 +1182,8 @@ dt {
 }
 
 .settings-item {
-  margin: 0 0 0 0;
-  padding: 16px 0 16px 0;
+  margin: 0 0 16px 0;
+  padding: 0 0 16px 0;
   display: block;
   position: relative;
   width: 100%;
