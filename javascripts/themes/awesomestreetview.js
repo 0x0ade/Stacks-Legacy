@@ -50,8 +50,6 @@ astreetview.showRandomLocation = function(locations) {
   };
   var panorama = new google.maps.StreetViewPanorama($("#astreetview-pano")[0], panoramaOptions);
   map.setStreetView(panorama);
-  
-  console.log(locations);
 }
 
 astreetview.init = function() {
