@@ -10,6 +10,7 @@ astreetview.refreshLocations_cb = null;
 astreetview.refreshLocations = function(data, cb) {
   if (!data) {
     astreetview.refreshLocations_cb = cb;
+    setTimeout(function() {if (astreetview.refreshLocations_cb == cb) {astreetview.refreshLocations(data, cb);}}, 2500);
     $.ajax({
       url: "https://peaceful-shelf-4149.herokuapp.com/?callback=astreetview.refreshLocations&url=https://raw.githubusercontent.com/Jam3/awesome-streetview/master/locations.json?callback=?",
       type: "GET",
