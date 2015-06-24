@@ -13,6 +13,14 @@ voicesearch.alwaysListeningTimeoutTime = 1000;
 voicesearch.alwaysListeningPhase = -1;
 voicesearch.speechTimeoutTime = 250;
 
+voicesearch.handlers = [
+  {id: "google", handler: function(query) {
+    handleSearch(query);
+    location.href = "https://www.google.com/search?gs_ivs=1&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " ");
+    return true;
+  }}
+];
+
 if (localize) {
   console.log("voicesearch.js found localize.js; adding listeners...");
   localize.listeners.get.push(function(lang, data) {
@@ -274,8 +282,11 @@ voicesearch.stopListening = function(parseQuery) {
   voicesearch.stop(true, true);
   if (parseQuery && voicesearch.spoke) {
     var query = $("#speech").text()+" "+$("#speech-approx").text();
-    handleSearch(query);
-    location.href = "https://www.google.com/search?gs_ivs=1&q="+encodeURIComponent(query).replace(new RegExp("%20", "g"), " ");
+    for (var i = 0; i < voicesearch.handlers.length; i++) {
+      if (voicesearch.handlers[i].handler(query)) {
+        break;
+      }
+    }
   } else {
     voicesearch.startHotword(true);
   }
