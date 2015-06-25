@@ -5,7 +5,7 @@ astreetview.name = "Awesome Street-View (WIP)";
 astreetview.stylesheet = "./stylesheets/themes/astreetview.css";
 
 astreetview.init = function() {
-  $(".header").append($("<iframe id=\"astreetview-pano\" class=\"theme-astreetview\" src=\"http://mattdesl.github.io/google-panorama-equirectangular/demo/\"></iframe>"));
+  $(".header").append($("<iframe id=\"astreetview-pano\" class=\"theme-astreetview\" src=\"https://mattdesl.github.io/google-panorama-equirectangular/demo/\"></iframe>"));
 };
 
 astreetview.unload = function() {
