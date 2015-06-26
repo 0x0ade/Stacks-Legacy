@@ -28,16 +28,18 @@ themer.refresh = function() {
   localStorage.setItem("theme", themer.themeid);
   
   var select = $("#settings-theme-select");
-  select.empty();
-  for (var i = 0; i < themes.length; i++) {
-    select.append("<option value=\"" + themes[i].id + "\" " + (themes[i].id == themer.themeid ? "selected" : "") + ">" + themes[i].name + "</option>");
-  }
-  select.material_select();
-  select.parent().find("li").each(function(i) {
-    $(this).click(function() {
-      themer.setTheme(themes[i]);
+  if (select.children().length == 0) {
+    select.empty();
+    for (var i = 0; i < themes.length; i++) {
+      select.append("<option value=\"" + themes[i].id + "\" " + (themes[i].id == themer.themeid ? "selected" : "") + ">" + themes[i].name + "</option>");
+    }
+    select.material_select();
+    select.parent().find("li").each(function(i) {
+      $(this).click(function() {
+        themer.setTheme(themes[i]);
+      });
     });
-  });
+  }
 };
 
 themer.setTheme = function(theme) {

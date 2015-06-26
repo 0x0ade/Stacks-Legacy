@@ -50,7 +50,7 @@ voicesearch.override = {
   },
   onend: function() {
     voicesearch.active = false;
-    if (voicesearch.alwaysListeningPhase == -1) {
+    if (voicesearch.alwaysListening && voicesearch.alwaysListeningPhase == -1) {
       voicesearch.alwaysListeningPhase = 1;
       setTimeout(function() {voicesearch.recognition.start();}, voicesearch.alwaysListeningTimeoutTime);
     } else if (voicesearch.context.onend) {voicesearch.context.onend.apply(this, arguments)};

@@ -16,15 +16,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="815060055713-or8bqdnlear2ua7d0s51toc71bllfn1t.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js"></script>
     <script src="./javascripts/velocity.min.js"></script>
     <script src="./javascripts/color-thief.js"></script>
     
     <!-- Materialize (not to be used for everything) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="./stylesheets/materialize-custom.css"> <!-- custom preloader override -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./stylesheets/materialize-custom.css"> <!-- custom override -->
     
     <!-- Stacks javascript files -->
+    <script src="./javascripts/stacks-sync.js" async defer></script>
     <script src="./javascripts/location.js"></script> <!-- can't be loaded asynchronously as voicesearch requires it -->
     <script src="./javascripts/localize.js"></script> <!-- can't be loaded asynchronously as the sources require it to add their own translations for the labels -->
     <script src="./javascripts/scrolltoolbar.js" async defer></script>
@@ -148,7 +153,31 @@
         </div>
         
         <div class="scrollable">
-        
+          
+          <div id="settings-sync">
+            <h2 localize="settings.sync.header"></h2>
+            <div class="settings-item">
+              <p class="settings-item-text" localize="settings.sync.droid"></p>
+              <div class="settings-item-toggle switch">
+                <label>
+                  <input disabled type="checkbox" id="settings-sync-droid" onclick="stacks.droid.set(this.checked)"/>
+                  <span class="lever"></span>
+                </label>
+              </div>
+            </div>
+            <div class="settings-item">
+              <p class="settings-item-text" localize="settings.sync.pc"></p>
+              <div class="settings-item-toggle switch">
+                <label>
+                  <input disabled type="checkbox" id="settings-sync-droid" onclick="stacks.droid.set(this.checked)"/>
+                  <span class="lever"></span>
+                </label>
+              </div>
+            </div>
+            <div id="settings-sync-signin-hidden" style="display: none !important;"></div><!-- pseudo-element to get gapi.auth2 running -->
+            <a href="#" class="waves-effect waves-green btn-flat" id="settings-sync-signin"><i class="material-icons left">account_circle</i><div class="nodiv" localize="settings.sync.signin"></div></a>
+          </div>
+          
           <div id="settings-theme">
             <h2 localize="settings.theme.header"></h2>
             <div class="input-field col s12">
