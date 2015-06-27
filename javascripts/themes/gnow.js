@@ -4,6 +4,20 @@ gnow.id = "gnow";
 gnow.name = "Google Now (Default)";
 gnow.stylesheet = "./stylesheets/themes/gnow.css";
 
+gnow.meify = function() {
+  if (themer.themeid != gnow.id) {
+    return;
+  }
+  
+  if (stacks && stacks.sync && stacks.sync.auth2 && stacks.sync.auth2.isSignedIn.get()) {
+    var name = stacks.sync.auth2.currentUser.get().getBasicProfile().getName();
+    name = name.substr(0, name.lastIndexOf(" "));
+    $("#cbar_me").text("+"+name);
+  }
+  
+  setTimeout(gnow.meify, 30000);
+};
+
 gnow.doodle = {};
 gnow.doodle.date = new Date();
 gnow.doodle.dateArray = [gnow.doodle.date.getFullYear(), gnow.doodle.date.getMonth()+1, gnow.doodle.date.getUTCDate()];
@@ -123,6 +137,8 @@ gnow.init = function() {
   });
   
   gnow.background.refresh();
+  
+  gnow.meify();
 };
 
 gnow.unload = function() {

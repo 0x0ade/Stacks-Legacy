@@ -18,7 +18,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="815060055713-or8bqdnlear2ua7d0s51toc71bllfn1t.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://apis.google.com/js/client.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="./javascripts/velocity.min.js"></script>
     <script src="./javascripts/color-thief.js"></script>
     
@@ -175,8 +176,9 @@
               </div>
             </div>
             <div id="settings-sync-signin-hidden" style="display: none !important;"></div><!-- pseudo-element to get gapi.auth2 running -->
-            <a href="#" class="waves-effect waves-green btn-flat" id="settings-sync-signin"><i class="material-icons left">account_circle</i><div class="nodiv" localize="settings.sync.signin"></div></a>
+            <div class="waves-effect waves-green btn-flat" id="settings-sync-signin"><i class="material-icons left">account_circle</i><div class="nodiv" localize="settings.sync.signin"></div></div>
           </div>
+            <div class="waves-effect waves-green btn-flat" id="settings-sync-signout" style="display: none;"><i class="material-icons left">account_circle</i><div class="nodiv" localize="settings.sync.signout"></div></div>
           
           <div id="settings-theme">
             <h2 localize="settings.theme.header"></h2>
@@ -206,9 +208,9 @@
                 <input type="text">
               </div-->
             </div>
-            <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-add"><i class="mdi-content-add left"></i><div class="nodiv" localize="settings.hotword.add"></div></a>
-            <!--a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-record"><i class="mdi-av-mic left"></i><div class="nodiv" localize="settings.hotword.record"></div></a-->
-            <a href="#" class="waves-effect waves-green btn-flat" id="settings-hotword-apply"><i class="mdi-action-done left"></i><div class="nodiv" localize="settings.hotword.apply"></div></a>
+            <div class="waves-effect waves-green btn-flat" id="settings-hotword-add"><i class="mdi-content-add left"></i><div class="nodiv" localize="settings.hotword.add"></div></div>
+            <!--div class="waves-effect waves-green btn-flat" id="settings-hotword-record"><i class="mdi-av-mic left"></i><div class="nodiv" localize="settings.hotword.record"></div></div-->
+            <div class="waves-effect waves-green btn-flat" id="settings-hotword-apply"><i class="mdi-action-done left"></i><div class="nodiv" localize="settings.hotword.apply"></div></div>
           </div>
           
           <div style="display: block; width: 100%; height: 112px;"></div>
