@@ -196,6 +196,7 @@ stacks.sync.load = stacks.sync.load || function(cb) {
           var pinnedOld = localStorage.pinned;
           var themeOld = localStorage.theme;
           var locationOld = localStorage.location;
+          var alwaysListeningOld = localStorage["voicesearch:alwaysListening"];
           for (var key in (data || {})) {
             localStorage[key] = data[key];
           }
@@ -204,9 +205,9 @@ stacks.sync.load = stacks.sync.load || function(cb) {
             refreshCards();
           }
           if (localStorage.theme != themeOld) {
-            themer.refresh();
+            themer.setTheme(localStorage.theme);
           }
-          voicesearch.setAlwaysListening(localStorage.getItem("voicesearch:alwaysListening"));
+          voicesearch.setAlwaysListening(alwaysListeningOld);
           settings.refreshHotwords();
           //stacks.refresh();//TODO create stacks.js
           cb(data);
