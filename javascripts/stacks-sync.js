@@ -21,7 +21,7 @@ stacks.sync.preauth = stacks.sync.preauth || function() {
 }
 
 stacks.sync.auth = stacks.sync.auth || function(active) {
-  if (!gapi.auth2) {
+  if (!gapi.auth2 || !gapi.client) {
     setTimeout(function() {stacks.sync.auth(active);}, 100);
     return;
   }
@@ -40,6 +40,8 @@ stacks.sync.auth = stacks.sync.auth || function(active) {
   } else if (active) {
     stacks.sync.signIn();
   }
+  
+  gapi.client.load("drive", "v2");
 }
 
 stacks.sync.signIn = stacks.sync.signIn || function() {
@@ -62,18 +64,69 @@ stacks.sync.onSignOut = stacks.sync.onSignOut || function() {
   $("#settings-sync-signin").css("display", "");
 };
 
+stacks.sync.newGDriveFile_running = false;
+
 stacks.sync.newGDriveFile = stacks.sync.newGDriveFile || function(cb) {
   cb = cb || function() {};
-  gapi.client.drive.files.insert({"uploadType": "multipart", "title": "Stacks Sync Data"}).execute(function(result) {
+  
+  if (stacks.sync.gdriveid) {
+    cb(stacks.sync.gdriveid);
+    return;
+  }
+  if (!gapi.client) {
+    setTimeout(function() {stacks.sync.newGDriveFile(cb);}, 100);
+    return;
+  }
+  if (!gapi.client.drive) {
+    gapi.client.load("drive", "v2", function() {stacks.sync.newGDriveFile(cb);});
+    return;
+  }
+  if (!stacks.sync.auth2.currentUser.get().hasGrantedScopes("https://www.googleapis.com/auth/drive")) {
+    cb(null);
+    return;
+  }
+  if (stacks.sync.newGDriveFile_running) {
+    setTimeout(function() {stacks.sync.newGDriveFile(cb);}, 100);
+    return;
+  }
+  
+  stacks.sync.newGDriveFile_running = true;
+  gapi.client.drive.files.insert({"uploadType": "multipart", "title": "Stacks Sync", "mimeType": "application/json"}).execute(function(result) {
     stacks.sync.gdriveid = result.id;
+    stacks.sync.newGDriveFile_running = false;
     cb(result.id);
   });
 };
 
 stacks.sync.getGDriveFile = stacks.sync.getGDriveFile || function(cb) {
   cb = cb || function() {};
-  gapi.client.drive.files.list({"q": "title = 'Stacks Sync Data'"}).execute(function(result) {
+  
+  if (stacks.sync.gdriveid) {
+    cb(stacks.sync.gdriveid);
+    return;
+  }
+  if (!gapi.client) {
+    setTimeout(function() {stacks.sync.getGDriveFile(cb);}, 100);
+    return;
+  }
+  if (!gapi.client.drive) {
+    gapi.client.load("drive", "v2", function() {stacks.sync.getGDriveFile(cb);});
+    return;
+  }
+  if (!stacks.sync.auth2.currentUser.get().hasGrantedScopes("https://www.googleapis.com/auth/drive")) {
+    cb(null);
+    return;
+  }
+  
+  gapi.client.drive.files.list({"q": "title = 'Stacks Sync'"}).execute(function(result) {
+    if (!result.items) {
+      console.log("sync: WARNING: Something went wrong with the getGDriveFile result.");
+      stacks.sync.getGDriveFile(cb);
+      return;
+    }
+    
     if (result.items.length == 0) {
+      console.log("sync: WARNING: No file found with getGDriveFile.");
       stacks.sync.newGDriveFile(cb);
       return;
     }
@@ -84,8 +137,18 @@ stacks.sync.getGDriveFile = stacks.sync.getGDriveFile || function(cb) {
 };
 
 stacks.sync.load = stacks.sync.load || function(cb) {
+  cb = cb || function() {};
+  
+  if (!gapi.client) {
+    setTimeout(function() {stacks.sync.load(cb);}, 100);
+    return;
+  }
   if (!gapi.client.drive) {
     gapi.client.load("drive", "v2", function() {stacks.sync.load(cb);});
+    return;
+  }
+  if (!stacks.sync.auth2.currentUser.get().hasGrantedScopes("https://www.googleapis.com/auth/drive")) {
+    cb(null);
     return;
   }
   
@@ -106,8 +169,17 @@ stacks.sync.load = stacks.sync.load || function(cb) {
           "Authorization": auth.token_type + " " + auth.access_token
         },
         success: function(data) {
-          //TODO apply data
+          var pinnedOld = localStorage.pinned;
+          for (var key in (data || {})) {
+            localStorage[key] = data[key];
+          }
+          if (localStorage.pinned != pinnedOld) {
+            refreshCards();
+          }
           cb(data);
+        },
+        error: function() {
+          cb(null);
         }
       });
     }
@@ -115,8 +187,18 @@ stacks.sync.load = stacks.sync.load || function(cb) {
 };
 
 stacks.sync.save = stacks.sync.save || function(cb) {
+  cb = cb || function() {};
+  
+  if (!gapi.client) {
+    setTimeout(function() {stacks.sync.save(cb);}, 100);
+    return;
+  }
   if (!gapi.client.drive) {
-    gapi.client.load("drive", "v2", function() {stacks.sync.load(cb);});
+    gapi.client.load("drive", "v2", function() {stacks.sync.save(cb);});
+    return;
+  }
+  if (!stacks.sync.auth2.currentUser.get().hasGrantedScopes("https://www.googleapis.com/auth/drive")) {
+    cb(null);
     return;
   }
   
@@ -126,7 +208,22 @@ stacks.sync.save = stacks.sync.save || function(cb) {
     return;
   }
   
-  //TODO store to GDrive
+  var auth = stacks.sync.auth2.currentUser.get().getAuthResponse();
+  $.ajax({
+    url: "https://www.googleapis.com/upload/drive/v2/files/" + stacks.sync.gdriveid + "?uploadType=media&newRevision=false",
+    cache: false,
+    method: "PUT",
+    headers: {
+      "Authorization": auth.token_type + " " + auth.access_token
+    },
+    data: JSON.stringify(localStorage),
+    success: function(data) {
+      cb(data);
+    },
+    error: function() {
+      cb(null);
+    }
+  });
 };
 
 $(document).ready(function() {
@@ -134,3 +231,16 @@ $(document).ready(function() {
   $("#settings-sync-signin").click(stacks.sync.signIn);
   $("#settings-sync-signout").click(stacks.sync.signOut);
 });
+
+
+localStorage_setItem_ = localStorage.setItem;
+localStorage.setItem = function() {
+  localStorage_setItem_.apply(this, arguments);
+  stacks.sync.save();
+};
+
+localStorage_removeItem_ = localStorage.removeItem;
+localStorage.removeItem = function() {
+  localStorage_removeItem_.apply(this, arguments);
+  stacks.sync.save();
+};

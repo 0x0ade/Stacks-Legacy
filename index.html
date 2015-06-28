@@ -243,19 +243,7 @@
           appendTo: "#toolbar"
         });
         
-        setTimeout(function() {
-          var cookie = localStorage.getItem("pinned");
-          if (cookie && cookie.indexOf("[") == 0) {
-            var pinned = JSON.parse(cookie);
-            for (var i = 0; i < pinned.length; i++) {
-              var card = pinned[i];
-              window[card.reloader].addCard(card, function() {}, function() {});
-            }
-          }
-          $("#progress").css("background-color", "rgba(255, 255, 255, 0)");
-          $("#progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
-          handleSearch();
-        }, 2000);
+        setTimeout(refreshCards, 2000);
         
         $(".card").each(function() {
           animateCard($(this));
@@ -560,6 +548,22 @@
         if ($(".card").length < 3) {
           $("#button-clear").css("opacity", 0);
         }
+      };
+      
+      function refreshCards() {
+        $("#emptystate").css("display", "block");
+        $("#cards").children().remove();
+        var cookie = localStorage.getItem("pinned");
+        if (cookie && cookie.indexOf("[") == 0) {
+          var pinned = JSON.parse(cookie);
+          for (var i = 0; i < pinned.length; i++) {
+            var card = pinned[i];
+            window[card.reloader].addCard(card, function() {}, function() {});
+          }
+        }
+        $("#progress").css("background-color", "rgba(255, 255, 255, 0)");
+        $("#progress .indeterminate").css("background-color", "rgba(255, 255, 255, 0)");
+        handleSearch();
       };
       
       var buttonAddMenuVisible = false;
