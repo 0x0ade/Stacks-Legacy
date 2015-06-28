@@ -5,6 +5,7 @@ stacks.sync.client_id = stacks.sync.client_id || "815060055713-or8bqdnlear2ua7d0
 
 stacks.sync.auth2 = stacks.sync.auth2 || null;
 stacks.sync.auth2listening = stacks.sync.auth2listening || false;
+stacks.sync.gdriveid = localStorage.getItem("sync:gdriveid");
 
 stacks.sync.preauth = stacks.sync.preauth || function() {
   if (!gapi || !gapi.signin2) {
@@ -62,23 +63,39 @@ stacks.sync.onSignOut = stacks.sync.onSignOut || function() {
   $("#settings-sync-signin").css("display", "");
 };
 
-stacks.sync.load = stacks.sync.load || function(key) {
-  //TODO load from GDrive
-  
-  if (!key) {
+stacks.sync.load = stacks.sync.load || function(cb) {
+  gapi.client.load("drive", "v2");
+  stacks.sync.gdriveid = stacks.sync.gdriveid || localStorage.getItem("sync:gdriveid");
+  if (!stacks.sync.gdriveid) {
     return;
   }
   
-  return localStorage.getItem(key);
+  //TODO load from GDrive
+  
+  gapi.client.drive.files.get({"fileId": stacks.sync.gdriveid}).execute(function(file) {
+    if (file.downloadUrl) {
+      var accessToken = gapi.auth.getToken().access_token;
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', file.downloadUrl);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+      xhr.onload = function() {
+        callback(xhr.responseText);
+      };
+      xhr.onerror = function() {
+        callback(null);
+      };
+      xhr.send();
+    } else {
+      callback(null);
+    }
+  });
 };
 
-stacks.sync.save = stacks.sync.save || function(key, value) {
-  if (key) {
-    if (typeof value != "undefined") {
-      localStorage.setItem(key, value);
-    } else {
-      localStorage.removeItem(key);
-    }
+stacks.sync.save = stacks.sync.save || function(cb) {
+  gapi.client.load("drive", "v2");
+  stacks.sync.gdriveid = stacks.sync.gdriveid || localStorage.getItem("sync:gdriveid");
+  if (!stacks.sync.gdriveid) {
+    return;
   }
   
   //TODO store to GDrive

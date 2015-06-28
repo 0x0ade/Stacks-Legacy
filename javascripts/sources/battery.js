@@ -6,16 +6,29 @@ battery.refresh = function() {
     removeCard(oldcard);
   }
   
-  if (!(battery.battery.level < 0.5 || (battery.battery.level < 0.9 && battery.battery.charging))) {
+  if (battery.battery.level > 0.5 || (battery.battery.level > 0.9 && battery.battery.charging)) {
     return;
   }
-  
   var data = {charging: battery.battery.charging, chargingTime: battery.battery.chargingTime, dischargingTime: battery.battery.dischargingTime, level: battery.battery.level};
   
   battery.addCard(data, function() {}, function() {});
 };
 
 battery.addCard = function(data, success, fail) {
+  if (!battery.battery) {
+    success();
+    return;
+  }
+  
+  if (battery.battery.level > 0.5 || (battery.battery.level > 0.9 && battery.battery.charging)) {
+    var oldcard = $("#battery");
+    if (oldcard.length > 0) {
+      removeCard(oldcard);
+    }
+    success();
+    return;
+  }
+  
   if ($("#battery").length > 0) {
     success();
     return;
