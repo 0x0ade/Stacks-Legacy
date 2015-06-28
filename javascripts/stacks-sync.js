@@ -189,9 +189,11 @@ stacks.sync.load = stacks.sync.load || function(cb) {
           console.log("sync: Downloaded data from GDrive; Applying changes...");
           var pinnedOld = localStorage.pinned;
           var themeOld = localStorage.theme;
+          var locationOld = localStorage.location;
           for (var key in (data || {})) {
             localStorage[key] = data[key];
           }
+          localStorage.location = locationOld;
           if (localStorage.pinned != pinnedOld) {
             refreshCards();
           }
