@@ -188,6 +188,7 @@ stacks.sync.load = stacks.sync.load || function(cb) {
         success: function(data) {
           if (parseInt(data.timestamp) <= parseInt(localStorage.timestamp)) {
             console.log("sync: Downloaded data from GDrive; Changes will not be applied due to the timestamp.");
+            console.log("sync: Online: " + data.timestamp + "; Offline: " + localStorage.timestamp);
             cb(data);
             return;
           }
