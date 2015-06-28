@@ -347,6 +347,7 @@ voicesearch.stop = function(force, keepSession) {
 voicesearch.setAlwaysListening = function(value) {
   voicesearch.alwaysListening = value;
   localStorage.setItem("voicesearch:alwaysListening", value);
+  $("#settings-hotword-alwayslistening").prop("checked", value);
 };
 
 $(document).ready(function() {

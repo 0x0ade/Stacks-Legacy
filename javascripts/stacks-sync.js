@@ -170,12 +170,18 @@ stacks.sync.load = stacks.sync.load || function(cb) {
         },
         success: function(data) {
           var pinnedOld = localStorage.pinned;
+          var themeOld = localStorage.theme;
           for (var key in (data || {})) {
             localStorage[key] = data[key];
           }
           if (localStorage.pinned != pinnedOld) {
             refreshCards();
           }
+          if (localStorage.theme != themeOld) {
+            themer.refresh();
+          }
+          voicesearch.setAlwaysListening(localStorage.getItem("voicesearch:alwaysListening"));
+          //stacks.refresh();//TODO create stacks.js
           cb(data);
         },
         error: function() {
