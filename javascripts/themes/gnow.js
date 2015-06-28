@@ -13,6 +13,8 @@ gnow.meify = function() {
     var name = stacks.sync.auth2.currentUser.get().getBasicProfile().getName();
     name = name.substr(0, name.lastIndexOf(" "));
     $("#cbar_me").text("+"+name);
+  } else {
+    $("#cbar_me").text(localized("cbar.me"));
   }
   
   setTimeout(gnow.meify, 10000);
