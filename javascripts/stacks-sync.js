@@ -186,6 +186,11 @@ stacks.sync.load = stacks.sync.load || function(cb) {
           "Authorization": auth.token_type + " " + auth.access_token
         },
         success: function(data) {
+          if (parseInt(data.timestamp) <= parseInt(localStorage.timestamp)) {
+            console.log("sync: Downloaded data from GDrive; Changes will not be applied due to the timestamp.");
+            cb(data);
+            return;
+          }
           console.log("sync: Downloaded data from GDrive; Applying changes...");
           var pinnedOld = localStorage.pinned;
           var themeOld = localStorage.theme;
@@ -233,6 +238,8 @@ stacks.sync.save = stacks.sync.save || function(cb) {
   }
   
   console.log("sync: Saving data to GDrive...");
+  
+  localStorage.timestamp = Date.now();
   
   stacks.sync.gdriveid = stacks.sync.gdriveid;
   if (!stacks.sync.gdriveid) {
