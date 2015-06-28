@@ -6,6 +6,7 @@ stacks.sync.client_id = stacks.sync.client_id || "815060055713-or8bqdnlear2ua7d0
 stacks.sync.auth2 = stacks.sync.auth2 || null;
 stacks.sync.auth2listening = stacks.sync.auth2listening || false;
 stacks.sync.gdriveid = null;
+stacks.sync.initialFinished = false;
 
 stacks.sync.preauth = stacks.sync.preauth || function() {
   if (!gapi || !gapi.signin2) {
@@ -63,7 +64,7 @@ stacks.sync.onSignIn = stacks.sync.onSignIn || function() {
   $("#settings-sync-signin").css("display", "none");
   $("#settings-sync-signout").css("display", "");
   
-  stacks.sync.load(function() {stacks.sync.save();});
+  stacks.sync.load(function() {stacks.sync.save(function() {stacks.sync.initialFinished = true;});});
 };
 
 stacks.sync.onSignOut = stacks.sync.onSignOut || function() {
@@ -279,11 +280,15 @@ $(document).ready(function() {
 localStorage_setItem_ = localStorage.setItem;
 localStorage.setItem = function() {
   localStorage_setItem_.apply(this, arguments);
-  stacks.sync.save();
+  if (stacks.sync.initialFinished) {
+    stacks.sync.save();
+  }
 };
 
 localStorage_removeItem_ = localStorage.removeItem;
 localStorage.removeItem = function() {
   localStorage_removeItem_.apply(this, arguments);
-  stacks.sync.save();
+  if (stacks.sync.initialFinished) {
+    stacks.sync.save();
+  }
 };
