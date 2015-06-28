@@ -202,13 +202,14 @@ stacks.sync.load = stacks.sync.load || function(cb) {
             localStorage[key] = data[key];
           }
           localStorage.location = locationOld;
+          localStorage["voicesearch:alwaysListening"] = alwaysListeningOld;
           if (localStorage.pinned != pinnedOld) {
             refreshCards();
           }
           if (localStorage.theme != themeOld) {
             themer.setTheme(localStorage.theme);
           }
-          voicesearch.setAlwaysListening(alwaysListeningOld);
+          voicesearch.hotwordsCustom = JSON.parse(localStorage["voicesearch:hotwords"]);
           settings.refreshHotwords();
           //stacks.refresh();//TODO create stacks.js
           cb(data);
