@@ -15,7 +15,7 @@ gnow.meify = function() {
     $("#cbar_me").text("+"+name);
   }
   
-  setTimeout(gnow.meify, 30000);
+  setTimeout(gnow.meify, 10000);
 };
 
 gnow.doodle = {};
