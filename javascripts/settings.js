@@ -33,6 +33,19 @@ settings.hide = function() {
   menuOuter.find(".light").css("opacity", 0);
 };
 
+settings.refreshHotwords = function() {
+  $("#settings-hotword-items").children().remove();
+  for (var i = 0; i < voicesearch.hotwordsCustom.length; i++) {
+    console.log("settings: found hotword: " + voicesearch.hotwordsCustom[i]);
+    var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 1; max-height: 128px;\">\n"+
+      "<div class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></div>\n"+
+      "<input type=\"text\">\n"+
+    "</div>");
+    field.find("input").val(voicesearch.hotwordsCustom[i]);
+    $("#settings-hotword-items").append(field);
+  }
+}
+
 settings.removeHotword = function(elem) {
   var field = $(elem).parent();
   field.velocity({
@@ -51,19 +64,11 @@ $(document).ready(function() {
   
   $("#settings-hotword-alwayslistening").prop("checked", voicesearch.alwaysListening);
   
-  for (var i = 0; i < voicesearch.hotwordsCustom.length; i++) {
-    console.log("settings: found hotword: " + voicesearch.hotwordsCustom[i]);
-    var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 1; max-height: 128px;\">\n"+
-      "<a href=\"#\" class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></a>\n"+
-      "<input type=\"text\">\n"+
-    "</div>");
-    field.find("input").val(voicesearch.hotwordsCustom[i]);
-    $("#settings-hotword-items").append(field);
-  }
+  settings.refreshHotwords();
   
   $("#settings-hotword-add").on("click", function() {
     var field = $("<div class=\"settings-hotword-item input-field col s12\" style=\"opacity: 0; max-height: 0;\">\n"+
-      "<a href=\"#\" class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></a>\n"+
+      "<div class=\"waves-effect waves-red waves-circle red-text text-lighten-2 create-answer-remove suffix\" onclick=\"settings.removeHotword(this)\"><i class=\"mdi-action-highlight-remove\"></i></div>\n"+
       "<input type=\"text\">\n"+
     "</div>");
     $("#settings-hotword-items").append(field);
