@@ -43,8 +43,8 @@ maps.addCard = function(data, success, fail) {
   var card = $("<div class=\"card card-maps\" id=\""+data.id+"-maps\"><h2><a href=\"https://maps.google.com/maps/search/"+encodeURI(data.map_query).replace(new RegExp("%20", "g"), " ")+"\">"+data.title+"</a></h2></div>");
   var cardmap = $("<div style=\"height: 320px; margin: 0 -12px -4px -12px; pointer-events: none;\"></div>");
   card.append(cardmap);
-  appendCard(card);
-  animateCard(card);
+  stacks.appendCard(card);
+  stacks.animateCard(card);
   var pos = new google.maps.LatLng(data.content.geometry.location.A, data.content.geometry.location.F);
   var map = new google.maps.Map(cardmap[0], {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -58,7 +58,7 @@ maps.addCard = function(data, success, fail) {
   marker.setMap(map);
   if (!data.reloader) {
     data.reloader = "maps";
-    pinCard(data);
+    stacks.pinCard(data);
   }
   success();
 };
@@ -103,8 +103,8 @@ mapsDirections.addCard = function(data, success, fail) {
   var card = $("<div class=\"card card-maps-dir\" id=\""+data.id+"-mapsDirections\"><h2><a href=\"https://maps.google.com/maps/search/"+encodeURI(data.map_query)+"\">"+data.title+"</a></h2></div>");
   var cardmap = $("<div style=\"height: 320px; margin: 0 -12px -4px -12px; pointer-events: none;\"></div>");
   card.append(cardmap);
-  appendCard(card);
-  animateCard(card);
+  stacks.appendCard(card);
+  stacks.animateCard(card);
   //var pos = new google.maps.LatLng(data.content.geometry.location.k, data.content.geometry.location.D);
   var pos = new google.maps.LatLng(0, 0);
   var map = new google.maps.Map(cardmap[0], {
@@ -118,7 +118,7 @@ mapsDirections.addCard = function(data, success, fail) {
   map.fitBounds(data.content.routes[0].bounds);
   if (!data.reloader) {
     data.reloader = "mapsDirections";
-    pinCard(data);
+    stacks.pinCard(data);
   }
   success();
 };

@@ -42,23 +42,23 @@ function gcardProcess(query, data, success, fail) {
     if (link.indexOf("maps.google.") >= 0) { //MAPS (DIRECTIONS)
       var saddr = link.substring(link.indexOf("saddr=")+6, link.indexOf("&", link.indexOf("saddr=")+6));
       var daddr = link.substring(link.indexOf("daddr=")+6, link.indexOf("&", link.indexOf("daddr=")+6));
-      mapsDirections.handleQuery(query, success, fail, {title: cardTitle, content: card, id: idify(cardTitle), gcard_query: query, map_query: query, map_saddr: saddr, map_daddr: daddr}, card);
+      mapsDirections.handleQuery(query, success, fail, {title: cardTitle, content: card, id: stacks.idify(cardTitle), gcard_query: query, map_query: query, map_saddr: saddr, map_daddr: daddr}, card);
       return;
     }
   }
   card = card.wrap("<div/>").parent().html();
-  gcard.addCard({title: cardTitle, content: card, id: idify(cardTitle), gcard_query: query}, success, fail);
+  gcard.addCard({title: cardTitle, content: card, id: stacks.idify(cardTitle), gcard_query: query}, success, fail);
 };
 
 gcard.addCard = function(data, success, fail) {
   $("#"+data.id+"-gcard").remove();
   var card = $("<div class=\"card card-gcard\" id=\""+data.id+"-gcard\"><h2><a href=\"https://google.com/search?q="+encodeURIComponent(data.gcard_query).replace(new RegExp("%20", "g"), " ")+"\">"+data.title+"</a></h2></div>");
   card.append(data.content);
-  appendCard(card);
-  animateCard(card);
+  stacks.appendCard(card);
+  stacks.animateCard(card);
   if (!data.reloader) {
     data.reloader = "gcard";
-    pinCard(data);
+    stacks.pinCard(data);
     success();
   } else {
     gcard.handleQuery(data.gcard_query, success, fail);

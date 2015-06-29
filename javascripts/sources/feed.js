@@ -27,11 +27,11 @@ feed.addCard = function(data, success, fail) {
     return;
   }
   var card = $("<div class=\"card card-feed\" id=\""+data.id+"-feed\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p>"+data.content+"</p></div>");
-  appendCard(card);
-  animateCard(card);
+  stacks.appendCard(card);
+  stacks.animateCard(card);
   if (!data.reloader) {
     data.reloader = "feed";
-    pinCard(data);
+    stacks.pinCard(data);
   } else {
     var feed = new google.feeds.Feed(data.query);
     feed.load(function(result) {
@@ -39,8 +39,8 @@ feed.addCard = function(data, success, fail) {
         for (var i = 0; i < result.feed.entries.length; i++) {
           var entry = result.feed.entries[i];
           if (entry.link == data.link && i >= 3) {
-            unpinCard(card);
-            removeCard(card);
+            stacks.unpinCard(card);
+            stacks.removeCard(card);
             return;
           }
         }

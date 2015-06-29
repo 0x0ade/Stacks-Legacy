@@ -108,11 +108,11 @@ wikipedia.addCard = function(data, success, fail) {
   } else {
     card = $("<div class=\"card card-wikipedia\" id=\""+data.id+"-wikipedia\"><h2><a href=\""+data.link+"\">"+data.title+"</a></h2><p><span>"+data.content+"</span></p></div>");
   }
-  appendCard(card);
-  animateCard(card);
+  stacks.appendCard(card);
+  stacks.animateCard(card);
   if (!data.reloader) {
     data.reloader = "wikipedia";
-    pinCard(data);
+    stacks.pinCard(data);
   }
   success();
 };
