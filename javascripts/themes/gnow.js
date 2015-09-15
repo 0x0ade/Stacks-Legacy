@@ -72,8 +72,8 @@ gnow.background.hour = new Date().getHours();
 gnow.background.colorDark = "rgba(0, 0, 0, 0.87)";
 gnow.background.colorWhite = "rgba(255, 255, 255, 0.87)";
 gnow.background.times = [
-  {name: "dawn", hour: 4, color: gnow.background.colorDark, fg: "https://www.google.com/images/srpr/logo11w.png", bg: "https://lh5.ggpht.com/LeDpxkfCDssG2jwo20Tg01UxnUc4-PZUojwKsPzIQoGJ_CgbXc7KVko8o3nk5zA=w9999-h9999"},
-  {name: "day", hour: 10, color: gnow.background.colorDark, fg: "https://www.google.com/images/srpr/logo11w.png", bg: "https://lh5.ggpht.com/bosDZkBJxNdwo-dXGZeBkYtfCVnTFq96zqC08UV4dmIccI4YBr5p0CyCE7vmj2w=w9999-h9999"},
+  {name: "dawn", hour: 4, color: gnow.background.colorDark, fg: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", bg: "https://lh5.ggpht.com/LeDpxkfCDssG2jwo20Tg01UxnUc4-PZUojwKsPzIQoGJ_CgbXc7KVko8o3nk5zA=w9999-h9999"},
+  {name: "day", hour: 10, color: gnow.background.colorDark, fg: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", bg: "https://lh5.ggpht.com/bosDZkBJxNdwo-dXGZeBkYtfCVnTFq96zqC08UV4dmIccI4YBr5p0CyCE7vmj2w=w9999-h9999"},
   {name: "dusk", hour: 18, color: gnow.background.colorWhite, fg: "./images/logo11w-white.png", bg: "https://lh4.ggpht.com/DCGfFj7ILzkFXXDgCliyTAq-cjKs8eyoTstREjhB2grAzzjYnlelGfpIQ4cEX4c=w9999-h9999"},
   {name: "night", hour: 21, color: gnow.background.colorWhite, fg: "./images/logo11w-white.png", bg: "https://lh6.ggpht.com/QgqUFGYoAxRkyvbl_5Hq2L6CTsaGXt9kaqrMdSxga-462Uyv2IViGw7OBzDMWNI=w9999-h9999"}
 ];
